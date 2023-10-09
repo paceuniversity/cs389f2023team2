@@ -1,11 +1,16 @@
-# TEAM TOADD team number
+# TEAM 2
 
 ## App name
 
+> ### Movieboxd
+
 ## Team members
 
-TOADD names of the team members
-TOADD picture of the team
+> ### Amer Issa
+> ### Pride Yin
+
+> [!NOTE]
+> Team picture.
 
 ## App description
 
