@@ -28,6 +28,9 @@
 
 ## Process
 
+## Discover Doc
+[Persona Template](https://docs.google.com/document/d/1HKFDlwV5fCqiNxRBTslLKeU-cRMw8DLTFw4QTUe-cYw/edit?usp=sharing)
+
 ### Sprint 1
 
 * [Sprint planning]()
