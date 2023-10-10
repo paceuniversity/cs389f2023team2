@@ -6,11 +6,11 @@
 
 ## Team members
 
-> ### Amer Issa
-> ### Pride Yin
+- ### Amer Issa
+- ### Pride Yin
 
 > [!NOTE]
-> Team picture.
+> Team picture TBA.
 
 ## App description
 
