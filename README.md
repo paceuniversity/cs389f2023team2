@@ -57,6 +57,7 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 * IMDb API
 * Google Maps API
 * Firebase API
+* TMDB (The Movie Database)
 
 ## Final delivery
 
