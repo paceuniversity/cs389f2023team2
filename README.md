@@ -53,10 +53,10 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 * [Sprint retrospective]()
 
 ## Tools & APIs
-* [Letterboxd]
-* [IMDb]
-* [Google Maps]
-* [Firebase]
+* Letterboxd
+* IMDb
+* Google Maps
+* Firebase
 
 ## Final delivery
 
