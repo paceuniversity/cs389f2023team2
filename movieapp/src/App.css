@@ -60,9 +60,10 @@ nav {
   cursor: pointer;
 }
 .home-container {
-  background-color: ;
+  background-color: #262626;
 }
 .home-banner-container {
+  background-color: black;
   height: 77px;
   width: 1020px;
 }
@@ -75,7 +76,7 @@ nav {
 position:;
 z-index: 1;
 height: px;
-width: 2000px;
+width: auto;
 
   
   
