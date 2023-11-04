@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 import BannerImage from '../Assets/emptypic.jpg';
 import ExampleImage from '../Assets/movieexample.jpg';
 import { FiArrowRight } from "react-icons/fi";
+import BannerBackground from '../Assets/blackbluegradient.jpg';
 // import Navbar from './Navbar';
 
 const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
@@ -14,7 +15,7 @@ const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: '' + auth
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjhlMDQ4MDIxYjY4YWMzNGI5ZjFmYzk2OGM1YTZkZSIsInN1YiI6IjY1M2ZkZTk5NTkwN2RlMDEzOGUyZGZlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7DRRuXIDC2GrKKT5ri51E8Cl99Z6qSnECSseLR_RcA"
     }
   };
 
@@ -66,23 +67,27 @@ const Home = () => {
   return (
 
     <div className="home-container">
+      <img className="banner-background" src={ BannerBackground } alt=""></img>
       <div classname="home-banner-container" >
         <center>
           <img className="bigTopPicture" src={path1} alt="" />
         </center>
-        <div className="home-text-section">
-          <h1 className="primary-heading">
+        <h1 className="primary-heading">
             <center>
               Upcoming Movies All in One Place
             </center>
           </h1>
-
-        </div>
-        <center>
+          <center>
           <button className="secondary-button">
             Start Here <FiArrowRight />
           </button>
         </center>
+        
+        {/* <center>
+          <button className="secondary-button">
+            Start Here <FiArrowRight />
+          </button>
+        </center> */}
       </div>
 
     </div>

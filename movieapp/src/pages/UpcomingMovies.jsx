@@ -12,7 +12,7 @@ const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: '' + auth
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjhlMDQ4MDIxYjY4YWMzNGI5ZjFmYzk2OGM1YTZkZSIsInN1YiI6IjY1M2ZkZTk5NTkwN2RlMDEzOGUyZGZlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7DRRuXIDC2GrKKT5ri51E8Cl99Z6qSnECSseLR_RcA'
   }
 };
 
@@ -71,6 +71,7 @@ const UpcomingMovies = () => {
             <img className='MovieImage-size'src={path3} alt=''></img>
             <img className='MovieImage-size'src={path4} alt=''></img>
             <img className='MovieImage-size'src={path5} alt=''></img>
+
         </div>
     </div>    
   );
