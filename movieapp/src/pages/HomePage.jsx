@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css';
 import { Container } from 'react-bootstrap';
 import BannerImage from '../Assets/emptypic.jpg';
@@ -12,65 +12,68 @@ const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&
 const auth = process.env;
 
 const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjhlMDQ4MDIxYjY4YWMzNGI5ZjFmYzk2OGM1YTZkZSIsInN1YiI6IjY1M2ZkZTk5NTkwN2RlMDEzOGUyZGZlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7DRRuXIDC2GrKKT5ri51E8Cl99Z6qSnECSseLR_RcA"
-    }
-  };
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: '' + auth
+  }
+};
 
-let path1;
-
-fetch(upcomingUrl, options)
-  .then(res => res.json())
-  .then(json => {
-      const results = json.results;
-      const queue = new MovieQueue();
-
-      for (let i = 0; i < results.length; i++) {
-          const result = results[i];
-
-          const date = result.release_date.split('-');
-
-          if (parseInt(date[1]) > 10 && parseInt(date[0]) > 2022) {
-              const map = {
-                  id: result.id,
-                  title: result.original_title,
-                  description: result.overview,
-                  release: result.release_date,
-                  poster: result.poster_path,
-                  backdrop: result.backdrop_path,
-                  popularity: result.popularity
-              };
-              queue.enqueue(map);
-              // queue.setPopularity(result.popularity);
-          }
-      }
-      // queue.sort();
-      
-      // path1 = 'https://image.tmdb.org/t/p/w500' + queue.get(1).backdrop;
-
-      fetch('https://api.themoviedb.org/3/movie/' + queue.get(1).id + '/images', options)
-        .then(res => res.json())
-        .then(json => {
-          for (let i = 0; i < json.backdrops.length; i++) {
-            if (json.backdrops[i].width >= 2000) {
-              path1 = 'https://image.tmdb.org/t/p/w1280' + json.backdrops[i].file_path;
-            }
-          }
-        })
-        .catch(err => console.error('error:' + err));
-        })
-  .catch(err => console.error('error:' + err))
+let banner;
 
 const Home = () => {
-  return (
+  const [results, setResults] = useState([])
 
+  useEffect(() => {
+    fetch(upcomingUrl, options)
+      .then(res => res.json())
+      .then(json => {
+        const results = json.results;
+        const queue = new MovieQueue();
+
+        for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+
+            const date = result.release_date.split('-');
+
+            if (parseInt(date[1]) > 10 && parseInt(date[0]) > 2022) {
+                const map = {
+                    id: result.id,
+                    title: result.original_title,
+                    description: result.overview,
+                    release: result.release_date,
+                    poster: result.poster_path,
+                    backdrop: result.backdrop_path,
+                    popularity: result.popularity
+                };
+                queue.enqueue(map);
+                // queue.setPopularity(result.popularity);
+            }
+        }
+        // queue.sort();
+        
+        // path1 = 'https://image.tmdb.org/t/p/w500' + queue.get(1).backdrop;
+
+        fetch('https://api.themoviedb.org/3/movie/' + queue.get(1).id + '/images', options)
+          .then(res => res.json())
+          .then(json => {
+            for (let i = 0; i < json.backdrops.length; i++) {
+              banner = 'https://image.tmdb.org/t/p/w1280' + json.backdrops[i].file_path;
+              setResults(banner);
+            }
+          })
+          .catch(err => console.error('error:' + err));
+        })
+      .catch(err => console.error('error:' + err))
+  }, []);
+
+  return (
     <div className="home-container">
       <img className="banner-background" src={ BannerBackground } alt=""></img>
       <div classname="home-banner-container" >
         <center>
-          <img className="bigTopPicture" src={path1} alt="" />
+          {console.log('should banner')}
+          <img className="bigTopPicture" src={banner} alt="" />
         </center>
         <h1 className="primary-heading">
             <center>
@@ -89,9 +92,7 @@ const Home = () => {
           </button>
         </center> */}
       </div>
-
     </div>
-
   )
 };
 
