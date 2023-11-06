@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import BannerImage from '../Assets/emptypic.jpg';
 import ExampleImage from '../Assets/movieexample.jpg';
 import { FiArrowRight } from "react-icons/fi";
-import BannerBackground from '../Assets/blackbluegradient.jpg';
+import BannerBackground from '../Assets/blackgreygradient.jpg';
 // import Navbar from './Navbar';
 
 import MovieQueue from '../util/MovieQueue';
