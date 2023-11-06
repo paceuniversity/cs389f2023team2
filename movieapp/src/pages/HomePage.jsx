@@ -7,10 +7,13 @@ import { FiArrowRight } from "react-icons/fi";
 import BannerBackground from '../Assets/blackbluegradient.jpg';
 // import Navbar from './Navbar';
 
+import MovieQueue from '../util/MovieQueue';
+
 const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
 
 const auth = process.env;
-const todaysDate = new Date().toLocaleDateString().split('/');
+let todaysDate = new Date().toLocaleDateString().split('/');
+todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
 
 const options = {
   method: 'GET',
@@ -20,46 +23,6 @@ const options = {
   }
 };
 
-class MovieQueue {
-  constructor() {
-      this.elements = [];
-  }
-  enqueue(element) {
-      this.elements.push(element);
-  }
-  dequeue() {
-      return this.elements.shift();
-  }
-  peek() {
-      return this.elements[0];
-  }
-  queue() {
-      return this.elements;
-  }
-  remove(position) {
-      return this.elements.splice(position, 1);
-  }
-  sort() {
-      this.elements.sort((movie1, movie2) => {
-          return movie2.popularity - movie1.popularity;
-      });
-  }
-  get(position) {
-      return this.elements[position];
-  }
-  clear() {
-      while (!this.isEmpty) {
-          this.elements.shift()
-      }
-  }
-  get length() {
-      return this.elements.length;
-  }
-  get isEmpty() {
-      return this.elements.length === 0;
-  }
-}
-
 const Home = () => {
   const queue = new MovieQueue();
 
@@ -67,7 +30,7 @@ const Home = () => {
   const [banner, setBanner] = useState('')
 
   useEffect(() => {
-    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
+    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2023-11-05&sort_by=popularity.desc', options)
         .then(res => res.json())
         .then(json => setResults(json.results))
         .catch(err => console.log(err))
@@ -75,24 +38,24 @@ const Home = () => {
 
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
+    const releaseDate = result.release_date.split('-');
 
-    const date = result.release_date.split('-');
-    const month = date[1], day = date[2], year = date[0];
-
-    if (parseInt(month) >= parseInt(todaysDate[0]) && parseInt(day) > parseInt(todaysDate[1]) && parseInt(year) >= parseInt(todaysDate[2])) {
-        const map = {
-          id: result.id,
-          title: result.original_title,
-          description: result.overview,
-          release: result.release_date,
-          poster: 'https://image.tmdb.org/t/p/original' + result.poster_path,
-          backdrop: result.backdrop_path,
-          popularity: result.popularity
-        };
-        queue.enqueue(map);
+    if ((parseInt(releaseDate[0]) === 2024 && parseInt(releaseDate[1]) > todaysDate[0] - 6) || parseInt(releaseDate[0]) > 2024) {
+      continue;
     }
+
+    const map = {
+      id: result.id,
+      title: result.original_title,
+      description: result.overview,
+      release: result.release_date,
+      poster: 'https://image.tmdb.org/t/p/original' + result.poster_path,
+      backdrop: result.backdrop_path,
+      popularity: result.popularity
+    };
+    queue.enqueue(map);
   }
-  queue.sort();
+  // queue.sort();
 
   useEffect(() => {
     const random = Math.floor(Math.random() * queue.length);
@@ -109,7 +72,7 @@ const Home = () => {
             break;
           }
         }
-        setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[0].file_path);
+        setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[index].file_path);
       })
       .catch(err => console.error('error:' + err));
   });
@@ -123,7 +86,7 @@ const Home = () => {
         </center>
         <h1 className="primary-heading">
             <center>
-              Upcoming Movies All in One Place
+              Every Movie, Everywhere, All at Once
             </center>
           </h1>
           <center>
