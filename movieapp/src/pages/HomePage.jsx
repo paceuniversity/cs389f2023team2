@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css';
 import { Container } from 'react-bootstrap';
 import BannerImage from '../Assets/emptypic.jpg';
@@ -10,89 +10,14 @@ import BannerBackground from '../Assets/blackbluegradient.jpg';
 const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
 
 const auth = process.env;
+const todaysDate = new Date().toLocaleDateString().split('/');
 
 const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjhlMDQ4MDIxYjY4YWMzNGI5ZjFmYzk2OGM1YTZkZSIsInN1YiI6IjY1M2ZkZTk5NTkwN2RlMDEzOGUyZGZlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7DRRuXIDC2GrKKT5ri51E8Cl99Z6qSnECSseLR_RcA"
-    }
-  };
-
-let path1;
-
-fetch(upcomingUrl, options)
-  .then(res => res.json())
-  .then(json => {
-      const results = json.results;
-      const queue = new MovieQueue();
-
-      for (let i = 0; i < results.length; i++) {
-          const result = results[i];
-
-          const date = result.release_date.split('-');
-
-          if (parseInt(date[1]) > 10 && parseInt(date[0]) > 2022) {
-              const map = {
-                  id: result.id,
-                  title: result.original_title,
-                  description: result.overview,
-                  release: result.release_date,
-                  poster: result.poster_path,
-                  backdrop: result.backdrop_path,
-                  popularity: result.popularity
-              };
-              queue.enqueue(map);
-              // queue.setPopularity(result.popularity);
-          }
-      }
-      // queue.sort();
-      
-      // path1 = 'https://image.tmdb.org/t/p/w500' + queue.get(1).backdrop;
-
-      fetch('https://api.themoviedb.org/3/movie/' + queue.get(1).id + '/images', options)
-        .then(res => res.json())
-        .then(json => {
-          for (let i = 0; i < json.backdrops.length; i++) {
-            if (json.backdrops[i].width >= 2000) {
-              path1 = 'https://image.tmdb.org/t/p/w1280' + json.backdrops[i].file_path;
-            }
-          }
-        })
-        .catch(err => console.error('error:' + err));
-        })
-  .catch(err => console.error('error:' + err))
-
-const Home = () => {
-  return (
-
-    <div className="home-container">
-      <img className="banner-background" src={ BannerBackground } alt=""></img>
-      <div classname="home-banner-container" >
-        <center>
-          <img className="bigTopPicture" src={path1} alt="" />
-        </center>
-        <h1 className="primary-heading">
-            <center>
-              Upcoming Movies All in One Place
-            </center>
-          </h1>
-          <center>
-          <button className="secondary-button">
-            Start Here <FiArrowRight />
-          </button>
-        </center>
-        
-        {/* <center>
-          <button className="secondary-button">
-            Start Here <FiArrowRight />
-          </button>
-        </center> */}
-      </div>
-
-    </div>
-
-  )
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: '' + auth
+  }
 };
 
 class MovieQueue {
@@ -114,6 +39,11 @@ class MovieQueue {
   remove(position) {
       return this.elements.splice(position, 1);
   }
+  sort() {
+      this.elements.sort((movie1, movie2) => {
+          return movie2.popularity - movie1.popularity;
+      });
+  }
   get(position) {
       return this.elements[position];
   }
@@ -122,20 +52,6 @@ class MovieQueue {
           this.elements.shift()
       }
   }
-  setPopularity(popularity) {
-      this.popularity = popularity;
-  }
-  sort() {
-      this.elements = this.elements.sort((movie1, movie2) => {
-          if (movie2.popularity < movie1.popularity) {
-              return 1;
-          } else if (movie2.popularity > movie1.popularity) {
-              return - 1;
-          } else {
-              return 0;
-          }
-      })
-  }
   get length() {
       return this.elements.length;
   }
@@ -143,5 +59,87 @@ class MovieQueue {
       return this.elements.length === 0;
   }
 }
+
+const Home = () => {
+  const queue = new MovieQueue();
+
+  const [results, setResults] = useState([])
+  const [banner, setBanner] = useState('')
+
+  useEffect(() => {
+    fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
+        .then(res => res.json())
+        .then(json => setResults(json.results))
+        .catch(err => console.log(err))
+  }, []);
+
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+
+    const date = result.release_date.split('-');
+    const month = date[1], day = date[2], year = date[0];
+
+    if (parseInt(month) >= parseInt(todaysDate[0]) && parseInt(day) > parseInt(todaysDate[1]) && parseInt(year) >= parseInt(todaysDate[2])) {
+        const map = {
+          id: result.id,
+          title: result.original_title,
+          description: result.overview,
+          release: result.release_date,
+          poster: 'https://image.tmdb.org/t/p/original' + result.poster_path,
+          backdrop: result.backdrop_path,
+          popularity: result.popularity
+        };
+        queue.enqueue(map);
+    }
+  }
+  queue.sort();
+
+  useEffect(() => {
+    const random = Math.floor(Math.random() * queue.length);
+    const id = queue.get(random) == null ? 0 : queue.get(random).id;
+
+    fetch('https://api.themoviedb.org/3/movie/' + id + '/images?include_image_language=null', options)
+      .then(res => res.json())
+      .then(json => {
+        const breakRandom = Math.floor(Math.random() * json.backdrops.length);
+        let index = 0;
+        for (let i = 0; i < json.backdrops.length; i++) {
+          if (i == breakRandom) {
+            index = i;
+            break;
+          }
+        }
+        setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[0].file_path);
+      })
+      .catch(err => console.error('error:' + err));
+  });
+
+  return (
+    <div className="home-container">
+      <img className="banner-background" src={ BannerBackground } alt=""></img>
+      <div classname="home-banner-container" >
+        <center>
+          <img className="bigTopPicture" src={banner} alt="" />
+        </center>
+        <h1 className="primary-heading">
+            <center>
+              Upcoming Movies All in One Place
+            </center>
+          </h1>
+          <center>
+          <button className="secondary-button">
+            Start Here <FiArrowRight />
+          </button>
+        </center>
+        
+        {/* <center>
+          <button className="secondary-button">
+            Start Here <FiArrowRight />
+          </button>
+        </center> */}
+      </div>
+    </div>
+  )
+};
 
 export default Home;

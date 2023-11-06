@@ -7,11 +7,12 @@ import UpcomingMovies from './pages/UpcomingMovies';
 // import Navbar from './pages/Navbar';
 
 function App() {
-return <div className="App">
-  <Home/>
-  <UpcomingMovies/>
-</div>
-  ;
+  return <div className="App">
+    <Home/>
+    <UpcomingMovies/>
+  </div>;
+
+
 }
 
 export default App;
