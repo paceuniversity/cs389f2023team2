@@ -12,8 +12,8 @@ import MovieQueue from '../util/MovieQueue';
 const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
 
 const auth = process.env;
-// let todaysDate = new Date().toLocaleDateString().split('/');
-// todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
+let todaysDate = new Date().toLocaleDateString().split('/');
+todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
 
 const options = {
   method: 'GET',
@@ -38,6 +38,11 @@ const Home = () => {
 
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
+    const releaseDate = result.release_date.split('-');
+
+    if ((parseInt(releaseDate[0]) === 2024 && parseInt(releaseDate[1]) > todaysDate[0] - 6) || parseInt(releaseDate[0]) > 2024) {
+      continue;
+    }
 
     const map = {
       id: result.id,

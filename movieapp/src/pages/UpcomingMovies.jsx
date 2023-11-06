@@ -8,8 +8,8 @@ import { BiSolidRightArrow } from 'react-icons/bi';
 import MovieQueue from '../util/MovieQueue';
 
 const auth = process.env;
-// let todaysDate = new Date().toLocaleDateString().split('/');
-// todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
+let todaysDate = new Date().toLocaleDateString().split('/');
+todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
 
 const options = {
     method: 'GET',
@@ -53,6 +53,11 @@ const UpcomingMovies = () => {
 
     for (let i = 0; i < results.length; i++) {
         const result = results[i];
+        const releaseDate = result.release_date.split('-');
+
+        if ((parseInt(releaseDate[0]) === 2024 && parseInt(releaseDate[1]) > todaysDate[0] - 6) || parseInt(releaseDate[0]) > 2024) {
+            continue;
+        }
 
         const map = {
             title: result.original_title,
