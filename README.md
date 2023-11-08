@@ -6,7 +6,7 @@
 
 ## Team members
 
-- ### Amer Issa
+- ### Amer Issa (Scrum Master)
 - ### Pride Yin
 
 > [!NOTE]
