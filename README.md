@@ -2,11 +2,11 @@
 
 ## App name
 
-> ### Movieboxd
+> ### Cinematd (pending)
 
 ## Team members
 
-- ### Amer Issa
+- ### Amer Issa (Scrum Master)
 - ### Pride Yin
 
 > [!NOTE]
@@ -33,15 +33,15 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 
 ### Sprint 1
 
-* [Sprint planning]()
+* [Sprint planning](https://docs.google.com/spreadsheets/d/11HRFp56SYAYw_JTDj7q4dVFzCqaKKhRfAXW3GJJKIOo/edit?usp=sharing)
 * [Scrums](https://docs.google.com/document/d/13iWd2Pe6Xpn6dZK3eDIksSPLF6Vx0sPJREN3_s5xSKg/edit?usp=sharing)
-* [Sprint demo video]()
-* [Sprint retrospective]()
+* [Sprint demo video](https://github.com/paceuniversity/cs389f2023team2/assets/98407947/3b30d8fd-50ee-431d-9775-f6d8458f9f1b)
+* [Sprint retrospective](https://docs.google.com/document/d/1LlW-kgRtXazF0ovUGJwYXWj0M-IzRnoUjwUY8tZlsIA/edit?usp=sharing)
 
 ### Sprint 2
 
-* [Sprint planning]()
-* [Scrums]()
+* [Sprint planning](https://docs.google.com/spreadsheets/d/11HRFp56SYAYw_JTDj7q4dVFzCqaKKhRfAXW3GJJKIOo/edit?usp=sharing)
+* [Scrums](https://docs.google.com/document/d/13iWd2Pe6Xpn6dZK3eDIksSPLF6Vx0sPJREN3_s5xSKg/edit?usp=sharing)
 * [Sprint demo video]()
 * [Sprint retrospective]()
 
