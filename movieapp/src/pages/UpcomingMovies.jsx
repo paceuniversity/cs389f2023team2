@@ -28,19 +28,19 @@ const UpcomingMovies = () => {
     const [thirdResults, setThirdResults] = useState([])
 
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2023-11-05&sort_by=popularity.desc', options)
+        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
             .then(res => res.json())
             .then(json => setFirstResults(json.results))
     }, []);
 
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=2&primary_release_date.gte=2023-11-05&sort_by=popularity.desc', options)
+        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=2&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
             .then(res => res.json())
             .then(json => setSecondResults(json.results))
     }, []);
 
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=4&primary_release_date.gte=2023-11-05&sort_by=popularity.desc', options)
+        fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=4&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
             .then(res => res.json())
             .then(json => setThirdResults(json.results))
     }, []);
