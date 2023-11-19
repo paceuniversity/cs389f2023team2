@@ -58,32 +58,32 @@ const Home = () => {
   // queue.sort();
 
   useEffect(() => {
-    const random = Math.floor(Math.random() * queue.length);
-    const id = queue.get(random) == null ? 0 : queue.get(random).id;
+    if (banner === '') {
+      const random = Math.floor(Math.random() * queue.length);
+      const id = queue.get(random) == null ? 0 : queue.get(random).id;
 
-    fetch('https://api.themoviedb.org/3/movie/' + id + '/images?include_image_language=null', options)
-      .then(res => res.json())
-      .then(json => {
-        const breakRandom = Math.floor(Math.random() * json.backdrops.length);
-        let index = 0;
-        for (let i = 0; i < json.backdrops.length; i++) {
-          if (i == breakRandom) {
-            index = i;
-            break;
+      fetch('https://api.themoviedb.org/3/movie/' + id + '/images?include_image_language=null', options)
+        .then(res => res.json())
+        .then(json => {
+          const breakRandom = Math.floor(Math.random() * json.backdrops.length);
+          let index = 0;
+          for (let i = 0; i < json.backdrops.length; i++) {
+            if (i == breakRandom) {
+              index = i;
+              break;
+            }
           }
-        }
-        setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[index].file_path);
-      })
-      .catch(err => console.error('error:' + err));
+          setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[index].file_path);
+        })
+        .catch(err => console.error('error:' + err));
+    }
   });
 
   return (
     <div className="home-container">
-      <img className="banner-background" src={ BannerBackground } alt=""></img>
+      <img className="banner-background"></img>
+      <div className="thebanner" style={{backgroundImage: "url(" + banner + ")"}}></div>
       <div classname="home-banner-container" >
-        <center>
-          <img className="bigTopPicture" src={banner} alt="" />
-        </center>
         <h1 className="primary-heading">
             <center>
               Every Movie, Everywhere, All at Once
