@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react'
 import '../App.css';
 import MovieImage from '../Assets/emptypic.jpg';
 import MoviePoster from '../Assets/movieposter.jpg';
+import Movie from '../pages/Movie';
 
 import { BiSolidRightArrow } from 'react-icons/bi';
 
 import MovieQueue from '../util/MovieQueue';
+import { Link } from 'react-router-dom';
 
 const auth = process.env;
 let todaysDate = new Date().toLocaleDateString().split('/');
@@ -58,9 +60,11 @@ const UpcomingMovies = () => {
         if ((parseInt(releaseDate[0]) === 2024 && parseInt(releaseDate[1]) > todaysDate[0] - 6) || parseInt(releaseDate[0]) > 2024) {
             continue;
         }
+        const lowercase = result.original_title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
 
         const map = {
             title: result.original_title,
+            page_title: lowercase,
             description: result.overview,
             release: result.release_date,
             poster: 'https://image.tmdb.org/t/p/original' + result.poster_path,
@@ -79,11 +83,25 @@ const UpcomingMovies = () => {
                 </center>
                 </div>
                 <div className="UpcomingMovies-images">
-                <img className='MovieImage-size' src={queue.get(0) == null ? '' : queue.get(0).poster} alt=''></img>
-                <img className='MovieImage-size'src={queue.get(1) == null ? '' : queue.get(1).poster} alt=''></img>
-                <img className='MovieImage-size'src={queue.get(2) == null ? '' : queue.get(2).poster} alt=''></img>
-                <img className='MovieImage-size'src={queue.get(3) == null ? '' : queue.get(3).poster} alt=''></img>
-                <img className='MovieImage-size'src={queue.get(4) == null ? '' : queue.get(4).poster} alt=''></img>
+                    <Link to={`/movie/${queue.get(0) == null ? '' : queue.get(0).page_title}`}>
+                        <img className='MovieImage-size' src={queue.get(0) == null ? '' : queue.get(0).poster} alt=''></img>
+                    </Link>
+
+                    <Link to={`/movie/${queue.get(1) == null ? '' : queue.get(1).page_title}`}>
+                        <img className='MovieImage-size'src={queue.get(1) == null ? '' : queue.get(1).poster} alt=''></img>
+                    </Link>
+
+                    <Link to={`/movie/${queue.get(2) == null ? '' : queue.get(2).page_title}`}>
+                        <img className='MovieImage-size'src={queue.get(2) == null ? '' : queue.get(2).poster} alt=''></img>
+                    </Link>
+
+                    <Link to={`/movie/${queue.get(3) == null ? '' : queue.get(3).page_title}`}>
+                        <img className='MovieImage-size'src={queue.get(3) == null ? '' : queue.get(3).poster} alt=''></img>
+                    </Link>
+
+                    <Link to={`/movie/${queue.get(4) == null ? '' : queue.get(4).page_title}`}>
+                        <img className='MovieImage-size'src={queue.get(4) == null ? '' : queue.get(4).poster} alt=''></img>
+                    </Link>
 
             </div>
         </div>    
