@@ -8,16 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, RouterProvider, Routes, Route, createBrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-  },
-  {
-    path: 'movie',
-    element: <Movie />,
-  }
-]);
 
 root.render(
   <React.StrictMode>

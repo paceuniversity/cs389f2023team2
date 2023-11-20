@@ -1,9 +1,5 @@
 // TODO: CACHE WORK IN PROGRESS
 
-/*
-let todaysDate = new Date().toLocaleDateString().split('/');
-todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
-
 const options = {
     method: 'GET',
     headers: {
@@ -12,24 +8,22 @@ const options = {
     }
 };
 
-let notNulled = true;
-let page = 1;
-
 export default class MovieCache {
     constructor() {
         this.cache = [];
 
-        while (notNulled) {
-            fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=' + page + '&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
+        for (let i = 1; i < 110; i++) {
+            fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=' + i, options)
                 .then(res => res.json())
                 .then(json => {
+                    if (json === undefined || json.results.length === 0) return;
+
+                    const results = json.results;
+
                     for (let i = 0; i < results.length; i++) {
                         const result = results[i];
                         const releaseDate = result.release_date.split('-');
-                    
-                        if ((parseInt(releaseDate[0]) === 2024 && parseInt(releaseDate[1]) > todaysDate[0] - 6) || parseInt(releaseDate[0]) > 2024) {
-                          continue;
-                        }
+
                         const lowercase = result.original_title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
                     
                         const map = {
@@ -46,14 +40,11 @@ export default class MovieCache {
                     }
                 })
                 .catch(err => {
-                    notNulled = false;
                     console.log(err);
                 });
-            page++;
         }
     }
     getCache() {
         return this.cache;
     }
 }
-*/

@@ -92,11 +92,12 @@ nav {
   border-radius: 10px;
 }
 
-.thebanner {
+.the-banner {
   height: 720px;
   width: 1280px;
   border-radius: 10px;
   box-shadow: 0px 0px 40px 40px #1c1c1c inset;
+  animation: fade-in 0.5s;
 }
 
 .home-image-section {
@@ -194,6 +195,7 @@ background-color: #trans;
   margin-bottom: 10px;
   text-align: center;
   border-radius: 5px;
+  animation: fade-down 0.3s;
 }
 .primary-subheading {
   font-weight: 700;
@@ -361,6 +363,46 @@ background-color: #trans;
   display: flex;
   align-items: center;
   font-weight: 600;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 @media (max-width: 1000px) {
