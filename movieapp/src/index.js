@@ -6,24 +6,16 @@ import Movie from './pages/Movie'
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, RouterProvider, Routes, Route, createBrowserRouter } from 'react-router-dom';
+import MoviesPage from './pages/MoviesPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-  },
-  {
-    path: 'movie',
-    element: <Movie />,
-  }
-]);
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
           <Route path="/movie/:movieid" element={<Movie/>}/>
+          <Route path="/films" element={<MoviesPage/>}/>
           <Route path="/" element={ <App /> }>
         </Route>
       </Routes>
