@@ -48,14 +48,14 @@ const Home = () => {
     const lowercase = result.original_title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
 
     const map = {
+      popularity: result.popularity,
       id: result.id,
       title: result.original_title,
       page_title: lowercase,
       description: result.overview,
       release: result.release_date,
       poster: 'https://image.tmdb.org/t/p/original' + result.poster_path,
-      backdrop: result.backdrop_path,
-      popularity: result.popularity
+      backdrop: result.backdrop_path
     };
     queue.enqueue(map);
   }
@@ -89,7 +89,7 @@ const Home = () => {
     <div className="home-container">
       <img className="banner-background"></img>
       <Link to={`/movie/${title}`}>
-        <div className="thebanner" style={{backgroundImage: "url(" + banner + ")"}}></div>
+        <div className="the-banner" style={{backgroundImage: "url(" + banner + ")"}}></div>
       </Link>
       <div classname="home-banner-container" >
         <h1 className="primary-heading">
