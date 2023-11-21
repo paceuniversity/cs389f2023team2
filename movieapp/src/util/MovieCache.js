@@ -9,19 +9,24 @@ const options = {
 };
 
 export default class MovieCache {
-    constructor() {
-        this.cache = [];
+    constructor() { }
 
+    static populate() {
+        if (Object.keys(localStorage).length > 0) {
+            return undefined;
+        }
         for (let i = 1; i < 110; i++) {
             fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=' + i, options)
                 .then(res => res.json())
                 .then(json => {
-                    if (json === undefined || json.results.length === 0) return;
-
                     const results = json.results;
 
-                    for (let i = 0; i < results.length; i++) {
-                        const result = results[i];
+                    for (let j = 0; j < results.length; j++) {
+                        const result = results[j];
+
+                        if (result == null) {
+                            break;
+                        }
                         const releaseDate = result.release_date.split('-');
 
                         const lowercase = result.original_title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
@@ -36,15 +41,11 @@ export default class MovieCache {
                           backdrop: 'https://image.tmdb.org/t/p/w1280' + result.backdrop_path,
                           popularity: result.popularity
                         };
-                        this.cache.push(map);
+                        localStorage.setItem(map.id, JSON.stringify(map));
                     }
                 })
-                .catch(err => {
-                    console.log(err);
-                });
+                .catch(err => console.log(err));
         }
-    }
-    getCache() {
-        return this.cache;
+        return undefined;
     }
 }

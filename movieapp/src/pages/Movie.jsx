@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
-import App from "../App";
 import MovieQueue from '../util/MovieQueue';
+
+const auth = process.env;
 
 const options = {
     method: 'GET',
@@ -62,6 +62,10 @@ function Movie() {
             queue.enqueue(map);
             break;
         }
+    }
+
+    window.onunload = () => {
+        window.localStorage.clear();
     }
 
     return (
