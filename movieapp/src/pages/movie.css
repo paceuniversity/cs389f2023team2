@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif !important;
+  }
+ 
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .movie-container {
+    background-color: #1c1c1c;
+    padding-top: 100px;
+    height: fill;
+
+    
+
+
+    
+  }
+
+
+  .movie-banner-image {
+    height: 720px;
+    width: 1280px;
+    box-shadow: 0px 0px 40px 40px #1c1c1c inset;
+    animation: fade-in 0.5s;
+}
+
+  .movie-information{
+    width: 1200px;
+    background-color:#1a1a1a;
+     /* #0d0d0d; */
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border-style:;
+    border-radius: 25px;
+    height: fill;
+}
+
+.movie-poster{
+    width: 320px;
+    height: 480px;
+    margin-left: 20px;
+    margin-top: 20px;
+    float: left;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 30px 4px;
+
+    
+
+}
+
+
+
+  .movie-container .title {
+    font-size: 80px;
+    color: white;
+    
+  }  
+  
+  .movie-container .title .movie-header{
+    font-size: 20px;
+  }
+
+
+  
+
+  .movie-container .description {
+    color: white;
+
+  }
+  
+  .movie-container .popularity {
+    color: white;
+
+  }
