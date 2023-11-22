@@ -1,13 +1,16 @@
 
 import './App.css';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Home from './pages/HomePage';
 import UpcomingMovies from './pages/UpcomingMovies';
-// import Navbar from './pages/Navbar';
+import Navbar from './Navbar';
+import MoviesPage from './pages/MoviesPage';
+import Movie from './pages/Movie';
 // import MovieCache from './util/MovieCache';
 
 function App() {
+
   /*
   MovieCache.populate();
 
@@ -16,11 +19,23 @@ function App() {
   }
   */
 
+
   return (
+    
     <div className="App">
-      <Home/>
-      <UpcomingMovies/>
-    </div>
+
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/films" element={<MoviesPage />} />
+        <Route path="/movie/:movieid" element={<Movie/>}/>
+      </Routes>
+
+      {/* <Home/> */}
+      {/* <UpcomingMovies/> */}
+      </div>
+
   );
 }
 

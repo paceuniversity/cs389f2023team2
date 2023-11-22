@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import MovieQueue from '../util/MovieQueue';
+import './movie.css'
 
 const auth = process.env;
 
 const options = {
     method: 'GET',
     headers: {
-      accept: 'application/json',
-      Authorization: '' + auth
+        accept: 'application/json',
+        Authorization: auth + ''
     }
 };
 
@@ -35,6 +36,9 @@ function Movie() {
 
     const queue = new MovieQueue();
     const [results, setResults] = useState([]);
+    const [banner, setBanner] = useState('');
+    const [poster, setPoster] = useState('');
+    const [director, setDirector] = useState('');
 
     useEffect(() => {
         if (queue.length === 0) {
@@ -42,6 +46,7 @@ function Movie() {
                 .then(res => res.json())
                 .then(json => {
                     setResults(json.results);
+                    setPoster('https://image.tmdb.org/t/p/original' + json.results[0].poster_path);
                 })
                 .catch(err => console.log(err))
         }
@@ -52,6 +57,7 @@ function Movie() {
 
         if (result.original_title !== null) {
             const map = {
+                id: result.id,
                 title: result.original_title,
                 description: result.overview,
                 release: result.release_date,
@@ -63,16 +69,126 @@ function Movie() {
             break;
         }
     }
+    const id = queue.get(0) == null ? 0 : queue.get(0).id;
+
+    if (banner === '') {
+        fetch('https://api.themoviedb.org/3/movie/' + id + '/images?include_image_language=null', options)
+          .then(res => res.json())
+          .then(json => {
+                const breakRandom = Math.floor(Math.random() * json.backdrops.length);
+                let index = 0;
+                for (let i = 0; i < json.backdrops.length; i++) {
+                    if (i == breakRandom) {
+                        index = i;
+                        break;
+                    }
+                }
+                setBanner('https://image.tmdb.org/t/p/w1280' + json.backdrops[index].file_path);
+                return;
+            })
+          .catch(err => console.error('error:' + err));
+    }
+
+    if (director === '') {
+        let dir = [];
+        let d = '';
+        fetch('https://api.themoviedb.org/3/movie/' + id + '/credits?language=en-US', options)
+            .then(res => res.json())
+            .then(json => {
+                const crew = json.crew;
+
+                for (let j = 0; j < crew.length; j++) {
+                    const member = crew[j];
+
+                    if (member.known_for_department === 'Directing') {
+                        dir.push(member.name);
+                        break;
+                    }
+                }
+                for (let k = 0; k < dir.length; k++) {
+                    if (k !== dir.length - 1) {
+                        d += dir[k] + ', ';
+                    } else {
+                        d += dir[k];
+                    }
+                }
+                setDirector(d);
+            })
+            .catch(err => console.log(err));
+    }
+
+    let releaseYear = '';
+    let release = '';
+    const date = queue.get(0) == null ? '' : queue.get(0).release.split('-');
+
+    switch (date[1]) {
+        case '01':
+            releaseYear = 'January';
+            break;
+        case '02': 
+            releaseYear = 'February';
+            break;
+        case '03': 
+            releaseYear = 'March';
+            break;
+        case '04':
+            releaseYear = 'April';
+            break;
+        case '05':
+            releaseYear = 'May';
+            break;
+        case '06':
+            releaseYear = 'June';
+            break;
+        case '07':
+            releaseYear = 'July';
+            break;
+        case '08':
+            releaseYear = 'August';
+            break;
+        case '09':
+            releaseYear = 'September';
+            break;
+        case '10':
+            releaseYear = 'October';
+            break;
+        case '11':
+            releaseYear = 'November';
+            break;
+        case '12':
+            releaseYear = 'December';
+            break;
+        default: break;
+    }
+    release = releaseYear + ' ' + date[2] + ', ' + date[0];
 
     window.onunload = () => {
         window.localStorage.clear();
     }
 
     return (
-        <>
-            <p>{`${queue.get(0) == null ? '' : queue.get(0).title}`}</p>
-            <p>{`${queue.get(0) == null ? '' : queue.get(0).description}`}</p>
-        </>
+        <div className="movie-container">
+            <center>
+                <div className="movie-banner-image" style={{backgroundImage: "url(" + banner + ")"}}></div>
+            </center>
+            <center>
+                <div className="movie-information">
+                    <img className="movie-poster" src={poster}></img>
+                        <div className="title">
+                            <p>{`${queue.get(0) == null ? '' : queue.get(0).title}`}</p>
+                                <div className="movie-header">
+                                    <p>Directed by {`${director}`}</p>
+                                    <p>{`${release}`} </p>
+                                </div>
+                        </div>
+                    <div className="description">
+                        <p>{`${queue.get(0) == null ? '' : queue.get(0).description}`}</p>
+                    </div>
+
+                </div>
+            </center>
+            
+        </div>
     )
 }
 
