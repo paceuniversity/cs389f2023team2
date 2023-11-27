@@ -1,0 +1,165 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif !important;
+  }
+ 
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #1c1c1c;
+    
+    
+  }
+
+  .profile-page-container{
+    background-color: #1c1c1c;
+    height: auto;
+    padding-top: 100px;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+
+    
+
+  }
+  .profile-page-container .profile-box{
+    background-image: linear-gradient(#1c1c1c,#636363);    
+    width: 1300px;
+    height: auto;
+    padding-top: 25px;
+    padding-left: 25px;
+    color: white;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    flex-wrap: wrap;
+
+  }
+
+  .profile-page-container .profile-box .profile-picture {
+    line-height: 0;		/* remove line-height */ 
+    display: inline-block;	/* circle wraps image */
+    margin: 5px;
+    border: 4px solid rgba(200,200,200,0.4);
+    border-radius: 50%;	/* relative value */
+    /*box-shadow: 0px 0px 5px rgba(0,0,0,0.4);*/
+    transition: linear 0.25s;
+    height: 400px;
+    width: 400px;
+    float: left;
+    order: 1;
+    display: flex;
+
+  }
+  .profile-name{
+    order: 2;
+    /* padding-bottom: 30px; */
+    display: flex;
+    /* flex: 1 1 50%; */
+
+  }
+
+  .filmswatched-link{
+    margin-bottom: 15px;
+    text-decoration: none;
+    /* padding-left: 300px; */
+    overflow:visible;
+    order: 4;
+    margin-left: 300px;
+  }
+
+  .watch-link {
+    color: white;
+    font-size: 24px;
+
+  }
+
+  .watch-link:hover {
+    color: grey;
+    text-decoration: none;
+  }
+
+
+  .filmswatched-link:hover{
+    text-decoration: none;
+    color: white;
+  }
+  
+  
+  .profile-description{
+    order: 3;
+    font-size: 24px;
+    width: 720px;
+    height: 350px;
+    /* margin-left: 425px; */
+    display: flex;
+    overflow:visible;
+
+  }
+
+
+  .profile-favorite-movies-title {
+    font-size: 32px;
+    padding-top: 20px;
+    /* align-items: center; */
+    /* justify-content: center; */
+  }
+
+  .profile-favorite-movies {
+    height: auto;
+    display: flex;
+  }
+
+  .poster-sizing {
+    width: 214px;
+    height: 320px;
+    margin-left: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 30px 4px;
+    
+  }
+  .watchlist-title {
+    font-size: 32px;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .expand-button{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    /* font-size: 24px; */
+  }
+
+  .expand-button .expand{
+    align-items: center;
+    background-color: transparent;
+    border-radius: 12px;
+    box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    /* flex: 1 1 auto; */
+    justify-content: center;
+    line-height: 1;
+    margin: 0;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s,-webkit-box-shadow .2s;
+    white-space: nowrap;
+    border: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+
+
+
+

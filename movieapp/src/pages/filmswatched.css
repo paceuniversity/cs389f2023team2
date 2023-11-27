@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif !important;
+  }
+ 
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #1c1c1c;
+  }
+
+.films-page-container {
+    padding-top: 100px;
+    background-color: #1c1c1c;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+.films-box {
+    background-image: linear-gradient(#1c1c1c,#636363);
+    width:1500px;
+    height: 1500px;
+}
+
+.title h1{
+    padding-left: 30px;
+    margin-bottom: 30px;
+    color: white;
+}

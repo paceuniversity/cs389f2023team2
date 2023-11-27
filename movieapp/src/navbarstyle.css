@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 body{
@@ -53,14 +54,19 @@ body{
 
 }
 
+.nav a:hover {
+    text-decoration: none;
+    color: gray;
+}
+
 .nav li.active {
     color: grey;
     text-decoration: none;
 
 }
 
-.nav li:hover {
-    color: red;
+.nav ul:hover {
+    color: white;
     text-decoration: none;
 
 }

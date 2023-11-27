@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import MovieQueue from '../util/MovieQueue';
 import './movie.css'
+import StarIcon from '@mui/icons-material/Star';
+
+var storage = require('../storage/members.json');
+let json = JSON.parse(JSON.stringify(storage));
 
 const auth = process.env;
 
@@ -8,7 +12,7 @@ const options = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: auth + ''
+        Authorization: ''
     }
 };
 
@@ -39,6 +43,7 @@ function Movie() {
     const [banner, setBanner] = useState('');
     const [poster, setPoster] = useState('');
     const [director, setDirector] = useState('');
+    const [logged, setLogged] = useState('Log');
 
     useEffect(() => {
         if (queue.length === 0) {
@@ -51,6 +56,20 @@ function Movie() {
                 .catch(err => console.log(err))
         }
     }, []);
+
+    useEffect(() => {
+        let exists = false;
+
+        for (let i = 0; i < json['pridelightbourne'].films.length; i++) {
+            if (json['pridelightbourne'].films[i].id === id) {
+                exists = true;
+                break;
+            }
+        }
+        if (exists) {
+            setLogged('Logged');
+        }
+    });
 
     for (let i = 0; i < results.length; i++) {
         const result = results[i];
@@ -100,9 +119,8 @@ function Movie() {
                 for (let j = 0; j < crew.length; j++) {
                     const member = crew[j];
 
-                    if (member.known_for_department === 'Directing') {
+                    if (member.job === 'Director') {
                         dir.push(member.name);
-                        break;
                     }
                 }
                 for (let k = 0; k < dir.length; k++) {
@@ -184,11 +202,42 @@ function Movie() {
                     <div className="description">
                         <p>{`${queue.get(0) == null ? '' : queue.get(0).description}`}</p>
                     </div>
-
                 </div>
             </center>
-            
+            <div className="add-to-section">
+                <button className="add-to-button"><StarIcon /> Favorite</button>
+                <button className="add-to-button">+ Watchlist</button>
+                <button className="add-to-button" onClick={() => {
+                    if (window.localStorage.getItem('users') === null) {
+                        window.localStorage.setItem('users', JSON.stringify(json));
+                    }
+                    const user = 'pridelightbourne';
+                    const id = queue.get(0) == null ? 0 : queue.get(0).id;
+                    let exists = false;
+
+                    for (let i = 0; i < json[user].films.length; i++) {
+                        if (json[user].films[i].id === id) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        json[user].films.push({
+                            id: id,
+                            poster: poster
+                        });
+                        setLogged('Logged');
+                        window.localStorage.setItem('users', JSON.stringify(json));
+                    }
+                }}>{
+                    logged
+                }</button>
+            </div>
+            <div className="copyright">
+                <center><span style={{color: "blanchedalmond"}}>© Cinematd. Co-founded by Amer Issa & Pride Yin</span></center>
+            </div>
         </div>
+        
     )
 }
 
