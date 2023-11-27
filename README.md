@@ -42,8 +42,8 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 
 * [Sprint planning](https://docs.google.com/spreadsheets/d/11HRFp56SYAYw_JTDj7q4dVFzCqaKKhRfAXW3GJJKIOo/edit?usp=sharing)
 * [Scrums](https://docs.google.com/document/d/13iWd2Pe6Xpn6dZK3eDIksSPLF6Vx0sPJREN3_s5xSKg/edit?usp=sharing)
-* [Sprint demo video]()
-* [Sprint retrospective]()
+* [Sprint demo video](https://drive.google.com/file/d/1CWyEII-brsW1xtlgSwJl9aWc7Hskxexi/view?usp=sharing)
+* [Sprint retrospective](https://docs.google.com/document/d/1yAYMF7bjehLNeHwg-rzpDvMR2ps481FTGCBgljR2wJA/edit?usp=sharing)
 
 ### Sprint 3
 
@@ -53,8 +53,9 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 * [Sprint retrospective]()
 
 ## Tools & APIs
-* Letterboxd API
-* IMDb API
+* Oracle Cloud Infrastructure
+* MySQL
+* Docker
 * Google Maps API
 * Firebase API
 * TMDB (The Movie Database)
