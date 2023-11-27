@@ -29,11 +29,11 @@ export default class MovieCache {
                         }
                         const releaseDate = result.release_date.split('-');
 
-                        const lowercase = result.original_title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
+                        const lowercase = result.title.replaceAll(' ', '-').toLowerCase() + '-' + releaseDate[0];
                     
                         const map = {
                           id: result.id,
-                          title: result.original_title,
+                          title: result.title,
                           page_title: lowercase,
                           description: result.overview,
                           release: result.release_date,
