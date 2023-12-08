@@ -47,7 +47,7 @@ Movieboxd is an app that provides way for everyone to not only log movies for yo
 
 ### Sprint 3
 
-* [Sprint planning]()
+* [Sprint planning](https://docs.google.com/spreadsheets/d/11HRFp56SYAYw_JTDj7q4dVFzCqaKKhRfAXW3GJJKIOo/edit#gid=1139565289)
 * [Scrums]()
 * [Sprint demo video]()
 * [Sprint retrospective]()
