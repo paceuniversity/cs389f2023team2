@@ -3,8 +3,13 @@ import MovieQueue from '../util/MovieQueue';
 import './movie.css'
 import StarIcon from '@mui/icons-material/Star';
 
-var storage = require('../storage/members.json');
-let json = JSON.parse(JSON.stringify(storage));
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
 const auth = process.env;
 
@@ -44,6 +49,7 @@ function Movie() {
     const [poster, setPoster] = useState('');
     const [director, setDirector] = useState('');
     const [logged, setLogged] = useState('Log');
+    const [json, setJSON] = useState({});
 
     useEffect(() => {
         if (queue.length === 0) {
@@ -58,16 +64,34 @@ function Movie() {
     }, []);
 
     useEffect(() => {
+        const getJSON = async () => {
+            const ref = collection(getFirestore(app), 'members');
+        
+            // await setDoc(doc(getFirestore(app), "members", "member"), json);
+        
+            const querySnapshot = await getDocs(collection(getFirestore(app), "members"));
+            querySnapshot.forEach((doc) => {
+                if (doc.data().test === undefined) {
+                    setJSON(doc.data());
+                }
+            });
+        }
+        getJSON();
+    }, {});
+    
+    useEffect(() => {
         let exists = false;
 
-        for (let i = 0; i < json['pridelightbourne'].films.length; i++) {
-            if (json['pridelightbourne'].films[i].id === id) {
-                exists = true;
-                break;
+        if (json['pridelightbourne'] !== undefined) {
+            for (let i = 0; i < json['pridelightbourne'].films.length; i++) {
+                if (json['pridelightbourne'].films[i].id === id) {
+                    exists = true;
+                    break;
+                }
             }
-        }
-        if (exists) {
-            setLogged('Logged');
+            if (exists) {
+                setLogged('Logged');
+            }
         }
     });
 
@@ -195,7 +219,7 @@ function Movie() {
                         <div className="title">
                             <p>{`${queue.get(0) == null ? '' : queue.get(0).title}`}</p>
                                 <div className="movie-header">
-                                    <p>Directed by {`${director}`}</p>
+                                    <p>Directed by: {`${director}`}</p>
                                     <p>{`${release}`} </p>
                                 </div>
                         </div>
@@ -208,9 +232,6 @@ function Movie() {
                 <button className="add-to-button"><StarIcon /> Favorite</button>
                 <button className="add-to-button">+ Watchlist</button>
                 <button className="add-to-button" onClick={() => {
-                    if (window.localStorage.getItem('users') === null) {
-                        window.localStorage.setItem('users', JSON.stringify(json));
-                    }
                     const user = 'pridelightbourne';
                     const id = queue.get(0) == null ? 0 : queue.get(0).id;
                     let exists = false;
@@ -223,11 +244,20 @@ function Movie() {
                     }
                     if (!exists) {
                         json[user].films.push({
-                            id: id,
-                            poster: poster
+                            id: id
                         });
                         setLogged('Logged');
-                        window.localStorage.setItem('users', JSON.stringify(json));
+                        const set = async () => {
+                            await setDoc(doc(getFirestore(app), "members", "member"), json);
+                        }
+                        set();
+                    } else {
+                        json[user].films.splice(json[user].films.indexOf({id: id, poster: poster}), 1);
+                        setLogged('Log');
+                        const set = async () => {
+                            await setDoc(doc(getFirestore(app), "members", "member"), json);
+                        }
+                        set();
                     }
                 }}>{
                     logged

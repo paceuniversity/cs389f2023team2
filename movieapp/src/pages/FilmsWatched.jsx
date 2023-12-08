@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react';
 
 import { BiSolidRightArrow } from 'react-icons/bi';
 
+import firebase from 'firebase/compat/app';
+import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
+
 let todaysDate = new Date().toLocaleDateString().split('/');
 todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
-
-var storage = require('../storage/members.json');
-let json = JSON.parse(JSON.stringify(storage));
 
 // 'https://api.themoviedb.org/3/movie/movie_id?language=en-US'
 
@@ -25,10 +25,27 @@ function FilmsWatched () {
     let user = window.location.href.split('/')[4];
 
     const [movies, setMovies] = useState([]);
+    const [json, setJSON] = useState({});
 
     const promises = [];
 
     useEffect(() => {
+        const getJSON = async () => {
+            const ref = collection(getFirestore(app), 'members');
+        
+            // await setDoc(doc(getFirestore(app), "members", "member"), json);
+        
+            const querySnapshot = await getDocs(collection(getFirestore(app), "members"));
+            querySnapshot.forEach((doc) => {
+                if (doc.data().test === undefined) {
+                    setJSON(doc.data());
+                }
+            });
+        }
+        getJSON();
+    }, {});
+
+    if (json[user] !== undefined) {
         for (let i = 0; i < json[user].films.length; i++) {
             promises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].films[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));
         }
@@ -64,7 +81,7 @@ function FilmsWatched () {
             }
             setMovies(movs);
         });
-    }, []);
+    }
     
     return (
         <div className="films-page-container">
