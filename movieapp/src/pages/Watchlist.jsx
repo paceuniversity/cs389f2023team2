@@ -1,11 +1,11 @@
-import './filmswatched.css';
+import './watchlist.css';
 import Avatar from '../Assets/avatar.jpg';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
-import { app } from '../FirebaseConfig';
 import { BiSolidRightArrow } from 'react-icons/bi';
 
+import { app } from '../FirebaseConfig';
 import firebase from 'firebase/compat/app';
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
@@ -22,7 +22,7 @@ const options = {
     }
 };
 
-function FilmsWatched () {
+function Watchlist() {
     let user = window.location.href.split('/')[4];
 
     const [movies, setMovies] = useState([]);
@@ -47,31 +47,38 @@ function FilmsWatched () {
     }, {});
 
     if (json[user] !== undefined) {
-        for (let i = 0; i < json[user].films.length; i++) {
-            promises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].films[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));
+        for (let i = 0; i < json[user].watchlist.length; i++) {
+            promises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].watchlist[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));
         }
         const res = [];
         const movs = [];
         Promise.all(promises).then(results => {
             for (let i = 0; i < results.length; i++) {
+                if (results[i] === undefined) {
+                    continue;
+                }
+                if (results[i].original_title === undefined) {
+                    continue;
+                }
                 let release = '';
+                // let page_title = '';
                 let poster = 'https://image.tmdb.org/t/p/original' + results[i].poster_path;
-                let rating = 0;
 
                 if (results[i].release_date !== undefined) {
                     release = results[i].release_date.split('-')[0];
                 }
-                for (let j = 0; j < json[user].films.length; j++) {
-                    if (json[user].films[j].id === results[i].id) {
-                        if (json[user].films[j].poster !== undefined) {
-                            poster = json[user].films[j].poster;
-                        }
-                        rating = json[user].films[j].rating;
+                /*
+                if (results[i].original_title !== undefined) {
+                    page_title = results[i].original_title.replaceAll(' ', '-').toLowerCase() + '-' + release;
+                }
+                */
+                for (let j = 0; j < json[user].watchlist.length; j++) {
+                    if (json[user].watchlist[j].id === results[i].id && json[user].watchlist[j].poster !== undefined) {
+                        poster = json[user].watchlist[j].poster;
                     }
                 }
                 const map = {
                     title: results[i].original_title,
-                    rating: rating,
                     release_date: results[i].release_date,
                     page_title: results[i].original_title.replaceAll(' ', '-').toLowerCase() + '-' + release,
                     poster: poster
@@ -103,45 +110,24 @@ function FilmsWatched () {
             });
             for (let i = 0; i < res.length; i++) {
                 const movie = res[i];
-                let rate = '☰';
     
                 if (movie === undefined) {
                     continue;
                 }
-                if (movie.rating > 0) {
-                    rate = '';
-                    const rateString = '' + movie.rating;
-                    const itr = parseInt(rateString.charAt(0));
-
-                    for (let j = 0; j < itr; j++) {
-                        rate += '★';
-                    }
-                    if (movie.rating % 1 !== 0) {
-                        rate += '½';
-                    }
-                }
-                movs.push(
-                    <div className="film">
-                        <div className="film-poster">
-                            <Link to={`/movie/${movie.page_title}`}><img className='poster-sizing' src={movie.poster}></img></Link>
-                        </div>
-                        <div className="stars" style={{color: "#787878", marginLeft: "20px", fontSize: "20px"}}>
-                            {rate}
-                        </div>
-                    </div>);
+                movs.push(<Link to={`/movie/${movie.page_title}`}><img className='poster-sizing' src={movie.poster}></img></Link>);
             }
             setMovies(movs);
         });
     }
     
     return (
-        <div className="films-page-container">
-            <div className="films-box">
+        <div className="watchlist-page-container">
+            <div className="watchlist-box">
                 <div className='title'>
-                     <h1>{`${user}'s Logged Films`}</h1>
+                     <h1>{`${user}'s Watchlist`}</h1>
                 </div>
-                <div className='films-posters'>
-                    <ol className='films-list'>{movies}</ol>
+                <div className='watchlist-posters'>
+                    <ol>{movies}</ol>
                 </div>
 
             </div>
@@ -149,4 +135,4 @@ function FilmsWatched () {
 
     )
 }
-export default FilmsWatched;
+export default Watchlist;
