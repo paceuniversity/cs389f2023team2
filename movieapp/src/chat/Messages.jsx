@@ -26,17 +26,21 @@ const Messages = () => {
     }
 
     if (chats !== undefined && chats.chatID !== undefined && !started) {
-        const getMessages = () => {
-            const unsub = onSnapshot(doc(db, "messages", chats.chatID), (doc) => {
-                setMessages(doc.data().messages);
-            });
+        try {
+            const getMessages = () => {
+                const unsub = onSnapshot(doc(db, "messages", chats.chatID), (doc) => {
+                    if (doc !== undefined && doc.data() !== undefined) {
+                        setMessages(doc.data().messages);
+                    }
+                });
 
-            return () => {
-                unsub();
+                return () => {
+                    unsub();
+                };
             };
-        };
-        getMessages();
-        setStarted(true);
+            getMessages();
+            setStarted(true);
+        } catch (exc) { }
     }
     
     return (

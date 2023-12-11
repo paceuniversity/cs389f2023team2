@@ -3,7 +3,7 @@ import { db, app } from "../FirebaseConfig";
 import { AuthContext } from "../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { getFirestore, collection, getDocs, setDoc, doc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, getDocs, setDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 
 const Chats = () => {
     const [chats, setChats] = useState([]);
@@ -74,7 +74,23 @@ const Chats = () => {
                                         await getDownloadURL(avatarRef)
                                             .then((url) => {
                                                 chatFriends.push(
-                                                    <div className="userChat">
+                                                    <div className="userChat" onClick={() => {
+                                                        const update = async () => {
+                                                            let chatID = '';
+                                                            if (authUser.uid < doc.id) {
+                                                                chatID = authUser.uid + authJSON.usernames[j].uid;
+                                                            } else {
+                                                                chatID = authJSON.usernames[j].uid + authUser.uid;
+                                                            }
+                                                            const random = Math.floor(Math.random() * 1000);
+                                                            await updateDoc(doc(db, "userChats", authUser.uid), {
+                                                                other: [random],
+                                                                username: friends[i],
+                                                                chatID: chatID,
+                                                            });
+                                                        }
+                                                        update();
+                                                    }}>
                                                         <img src={url}
                                                         alt="" 
                                                         />

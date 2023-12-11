@@ -40,7 +40,9 @@ const Input = () => {
     if (chats !== undefined && chats.chatID !== undefined && !started) {
         const getMessages = () => {
             const unsub = onSnapshot(doc(db, "messages", chats.chatID), (doc) => {
-                setMessages(doc.data().messages);
+                if (doc !== undefined && doc.data() !== undefined) {
+                    setMessages(doc.data().messages);
+                }
             });
 
             return () => {
@@ -57,6 +59,7 @@ const Input = () => {
             await setDoc(doc(getFirestore(app), "messages", chats.chatID), {messages: messages});
         }
         set();
+        setInput('');
     }
 
     const handleKey = (e) => {
@@ -65,7 +68,7 @@ const Input = () => {
 
     return (
         <div className="input">
-            <input type="text" placeholder="Type something..." onKeyDown={handleKey} onChange={(e) => setInput(e.target.value)}/>
+            <input type="text" value={input} placeholder="Type something..." onKeyDown={handleKey} onChange={(e) => setInput(e.target.value)}/>
             <div className="send">
                 <img src="" alt="" />
                 <button onClick={() => {

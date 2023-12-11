@@ -43,7 +43,7 @@ const options = {
 function Profile() {
     let user = window.location.href.split('/')[4];
     let name, bio, avatar, filmsWatched, reviews, friends;
-    let followButton, editButton;
+    let followButton, editButton, signOut;
 
     const [favorites, setFavorites] = useState([]);
     const [watchlist, setWatchlist] = useState([]);
@@ -195,6 +195,8 @@ function Profile() {
             }
         } else {
             followButton = <div></div>;
+
+            signOut = <div className="profile-sign-out"><button className="signout-button" onClick={() => redirect(`/signout`)}>Sign out</button></div>
 
             editButton = <div>
                 <Button onClick={handleOpen}>Edit My Profile</Button>
@@ -487,7 +489,7 @@ function Profile() {
             <div className='profile-description'>
                 <p>{bio}</p>
             </div>
-            <div className="profile-sign-out"><button className="signout-button" onClick={() => redirect(`/signout`)}>Sign out</button></div>
+            {signOut}
             <div className='profile-favorite-movies-title'><h3>Favorite Movies</h3></div>
             <div className='profile-favorite-movies'>
                     <ol>{favorites}</ol>
