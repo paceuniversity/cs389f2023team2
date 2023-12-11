@@ -17,13 +17,15 @@ const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&
 
 const auth = process.env.auth;
 let todaysDate = new Date().toLocaleDateString().split('/');
+
+const day = todaysDate[1];
 todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
 
 const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: auth
+    Authorization: ''
   }
 };
 
@@ -36,15 +38,13 @@ const Home = () => {
 
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const trendingUrl = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
 
   const fetchTrendingMovies = async () => {
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc`,
-        options
-      );
+      const response = await fetch(trendingUrl, options);
       const data = await response.json();
-      setTrendingMovies(data.results.slice(0, 5)); 
+      setTrendingMovies(data.results.slice(0, 5));
     } catch (error) {
       console.error('Error fetching trending movies:', error);
     }
@@ -52,19 +52,10 @@ const Home = () => {
 
   useEffect(() => {
     fetchTrendingMovies();
-  }, [currentPage]); 
+  }, [currentPage]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentPage((prevPage) => prevPage + 1); 
-    }, 300000);
-
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
+    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + (day.length == 1 ? '0' + day : day) + '&sort_by=popularity.desc', options)
         .then(res => res.json())
         .then(json => setResults(json.results))
         .catch(err => console.log(err))
@@ -188,19 +179,15 @@ const Home = () => {
         </div>
       </div>
 
-      <div className='trending-movies-title'><center><h4>Trending Movies</h4></center></div>    
-       <div className='trending-movies-container'>
-       <div className='trending-movies-posters'>
-        {trendingMovies.map((movie, index) => (
-        <Link key={movie.id} to={`/movie/${movie.page_title}`}>
-          <img
-            className='MovieImage-size'
-            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-            alt={`${movie.original_title} Poster`}
-          />
-        </Link>
-      ))}
-    </div>
+      <div className='trending-movies-title'><center><h4>Trending Movies</h4></center></div>
+      <div className='trending-movies-container'>
+        <div className='trending-movies-posters'>
+          {trendingMovies.map((movie, index) => (
+            <Link key={movie.id} to={`/movie/${movie.original_title.replaceAll(' ', '-').toLowerCase() + '-' + movie.release_date.split('-')[0]}`}>
+              <img className='MovieImage-size' src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.original_title} Poster`} />
+            </Link>
+          ))}
+        </div>
 
 
        </div>
