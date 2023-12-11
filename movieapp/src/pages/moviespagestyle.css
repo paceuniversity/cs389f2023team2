@@ -45,7 +45,7 @@
   }
 
 
-  .movies-page-container .movies-box .movie-posters{
+  .movies-page-container .movies-box .movieposters{
     margin-left: 30px;
     margin-top: 20px;
     /* margin-right: 20px; */
@@ -95,13 +95,13 @@
 
 
 
-  .movies-page-container .movies-box .movie-posters ol{
+  .movies-page-container .movies-box .movieposters ol{
     display: inline;
 
   }
 
 
-  .movies-page-container .movies-box .movie-posters .poster-sizing{
+  .movies-page-container .movies-box .movieposters .poster-sizing{
     width: 214px;
     height: 320px;
     margin-left: 20px;

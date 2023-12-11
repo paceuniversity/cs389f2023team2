@@ -17,13 +17,15 @@ const upcomingUrl = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&
 
 const auth = process.env.auth;
 let todaysDate = new Date().toLocaleDateString().split('/');
+
+const day = todaysDate[1];
 todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysDate[2])];
 
 const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: auth
+    Authorization: ''
   }
 };
 
@@ -64,7 +66,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + todaysDate[1] + '&sort_by=popularity.desc', options)
+    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + (day.length == 1 ? '0' + day : day) + '&sort_by=popularity.desc', options)
         .then(res => res.json())
         .then(json => setResults(json.results))
         .catch(err => console.log(err))

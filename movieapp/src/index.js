@@ -10,14 +10,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MoviesPage from './pages/MoviesPage';
 import HomePage from'./pages/HomePage';
 import Navbar from './Navbar';
+import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+  <AuthContextProvider>
     <BrowserRouter>
       <App />
 
     </BrowserRouter>
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

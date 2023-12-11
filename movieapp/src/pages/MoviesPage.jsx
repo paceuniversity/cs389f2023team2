@@ -440,12 +440,12 @@ function MoviesPage() {
                         </label>
                     </div>
                 </div>
-                <div className="movie-posters">
+                <div className="movieposters">
                     <ol>{movies}</ol>
                 </div>
                 <div className="expand-button">
                     <button onClick={() => setMovieIndex(movieIndex + 30)} className="expand" role="button">
-                        Expand
+                        Load more
                     </button>
                 </div>
             </div>

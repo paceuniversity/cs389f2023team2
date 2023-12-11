@@ -39,19 +39,96 @@
 
   }
 
+  .signout-button{
+    color: white ;
+    background-color: #1c1c1c;
+    width: 90px;
+    height: 40px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+  .signout-button:hover{
+    background-color: white;
+    color: #1c1c1c;
+    box-shadow: #121212 0 10px 50px 3px, transparent 0 0 0 0;
+  }
+
+  .choose-avatar-button{
+    width: 600px;
+  }
+
+
+  h1 {
+    color: white;
+  }
+
+
+
+  h3 {
+    color: white;
+  }
+
+  .profile-tab {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .user-tab {
+    display: flex;
+  }
+
+  .logged-movies-tab {
+    position: relative;
+    display: flex;
+  }
+
+  .friends-tab {
+    position: relative;
+    margin-left: 500px;
+  }
+  .reviews-tab {
+    position: relative;
+    margin-left: 450px;
+  }
+
+    .edit-button{
+      border: transparent;
+      background-color: transparent;
+    }
+    
+  .follow-button {
+    position: relative;
+    left: 800px;
+    color: white ;
+    background-color: #1c1c1c;
+    width: 90px;
+    height: 40px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+
+  }
+  .follow-button:hover{
+    background-color: white;
+    color: #1c1c1c;
+    box-shadow: #121212 0 10px 50px 3px, transparent 0 0 0 0;
+  }
+
   .profile-page-container .profile-box .profile-picture {
     line-height: 0;		/* remove line-height */ 
     display: inline-block;	/* circle wraps image */
     margin: 5px;
-    border: 4px solid rgba(200,200,200,0.4);
+    border: 1px solid rgba(200,200,200,0.4);
     border-radius: 50%;	/* relative value */
     /*box-shadow: 0px 0px 5px rgba(0,0,0,0.4);*/
     transition: linear 0.25s;
-    height: 400px;
-    width: 400px;
+    height: 256px;
+    width: 256px;
     float: left;
     order: 1;
     display: flex;
+    margin-top: 50px;
 
   }
   .profile-name{
@@ -59,7 +136,22 @@
     /* padding-bottom: 30px; */
     display: flex;
     /* flex: 1 1 50%; */
+    margin-left: 310px;
+    margin-top: 80px;
 
+  }
+
+  .profile-description{
+    order: 3;
+    font-size: 18px;
+    width: 720px;
+    height: auto;
+    min-height: 250px;
+    /* margin-left: 425px; */
+    display: flex;
+    overflow:visible;
+    margin-left: 310px;
+    color: #b5b5b5;
   }
 
   .filmswatched-link{
@@ -82,24 +174,26 @@
     text-decoration: none;
   }
 
+  .watchlist-link {
+    color: white;
+    font-size: 30px;
+
+  }
+
+  .watchlist-link:hover {
+    color: grey;
+    text-decoration: none;
+  }
+
 
   .filmswatched-link:hover{
     text-decoration: none;
     color: white;
   }
-  
-  
-  .profile-description{
-    order: 3;
-    font-size: 24px;
-    width: 720px;
-    height: 350px;
-    /* margin-left: 425px; */
-    display: flex;
-    overflow:visible;
 
+  .profile-sign-out {
+    margin-left: 10px;
   }
-
 
   .profile-favorite-movies-title {
     font-size: 32px;
@@ -125,6 +219,7 @@
     font-size: 32px;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
   }
 
 
@@ -157,8 +252,53 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-  }
+}
 
+.names-textbox{
+  width: 300px;
+  border-color: white;
+  border: 1px solid white;
+  color: white;
+}
+
+.bio-textbox{
+  width: 500px;
+  border-color: white;
+  border: 1px solid white;
+  color: white;
+
+}
+
+.submit-changes-button{
+    margin-top: 10px;
+    align-items: center;
+    background-color: #262626;
+    border-radius: 12px;
+    box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    /* flex: 1 1 auto; */
+    justify-content: center;
+    line-height: 1;
+    outline: none;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s,-webkit-box-shadow .2s;
+    white-space: nowrap;
+    border: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    
+}
+.submit-changes-button:hover {
+  box-shadow: #121212 0 10px 50px 3px, transparent 0 0 0 0;
+  background-color: white;
+  color: black; 
+}
 
 
 
