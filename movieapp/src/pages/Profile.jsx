@@ -99,15 +99,15 @@ function Profile() {
     
             uploadTask
                 .then((snapshot) => {
-                    console.log('Upload successful!', snapshot);
+                    // console.log('Upload successful!', snapshot);
                     return getDownloadURL(avatarRef);
                 })
                 .then((downloadURL) => {
-                    console.log('Download URL:', downloadURL);
+                    // console.log('Download URL:', downloadURL);
                     setAvatarURL(downloadURL);
                 })
                 .catch((error) => {
-                    console.error("Error uploading avatar:", error);
+                    // console.error("Error uploading avatar:", error);
                 });
         }
     };

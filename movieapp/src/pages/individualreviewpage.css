@@ -32,15 +32,14 @@
     
     
   }
-  .review-movie-posters{
+  .review-movie-posters {
     width: 320px;
     height: 480px;
     margin-right: 10px;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 30px 4px;
-
-    
   }
-  .review{
+
+  .review {
     margin-top: 40px;
     margin-left: 40px;
     display: flex;

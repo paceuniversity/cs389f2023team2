@@ -96,20 +96,9 @@ function FollowingPage() {
         <div className="following-page-container">
             <div className="following-section">
                 <div className="title"><h1>Following</h1></div>
-                <div className="following-acc">
-                    <ol>{friends}</ol>
-                </div>
-                <center>
-                    <div className="line"
-                        style={{
-                        background: '#262626',
-                        height: '3px',
-                        width: '1350px',
-                        bottom: '0px'
-                        }}/>
-                </center>
-
-
+                    <div className="following-acc">
+                        <ol>{friends}</ol>
+                    </div>
                 </div>
         </div>
     );

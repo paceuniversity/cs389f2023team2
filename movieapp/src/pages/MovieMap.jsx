@@ -10,7 +10,7 @@ const MovieMap = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA6kcIVEvtbUj3oRPirLRIQa8WjhAdb0Y8&libraries=places&callback=`;
     script.async = true;
     script.onload = () => initializeMap();
     document.head.appendChild(script);

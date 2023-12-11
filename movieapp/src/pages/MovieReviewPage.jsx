@@ -76,16 +76,6 @@ function MovieReviewPage() {
             <div className="reviews-section">
                 <div className="title"><h1>Reviews</h1></div>
                 <ol>{reviews}</ol>
-                <center>
-                    <div className="line"
-                        style={{
-                        background: '#262626',
-                        height: '3px',
-                        width: '1350px',
-                        bottom: '0px'
-                        }}
-                    />
-                    </center>
 
 
                 </div>

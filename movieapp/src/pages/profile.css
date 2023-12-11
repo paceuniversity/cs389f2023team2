@@ -129,6 +129,7 @@
     order: 1;
     display: flex;
     margin-top: 50px;
+    object-fit: cover;
 
   }
   .profile-name{
