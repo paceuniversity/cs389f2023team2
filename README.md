@@ -61,8 +61,7 @@ Cinematd is an app that provides way for everyone to not only log movies for you
 ## Final delivery
 
 * [Final presentation]()
-* [Poster](![Cinematd](https://github.com/paceuniversity/cs389f2023team2/assets/98407947/e4cc27e7-75ad-4b5d-bd9f-ee762f7a72c2))
-)
+* ![Cinematd](https://github.com/paceuniversity/cs389f2023team2/assets/98407947/ff2faed0-5fbb-44da-87eb-0a295bfb1219)
 * [Process description]()
 
 
