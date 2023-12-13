@@ -27,7 +27,7 @@ Cinematd is an app that provides way for everyone to not only log movies for you
 * [Requirements Discovery](https://docs.google.com/document/d/1HKFDlwV5fCqiNxRBTslLKeU-cRMw8DLTFw4QTUe-cYw/edit?usp=sharing)
 
 ## Architecture & Design
-[Architecture & Design]()
+[Architecture & Design](https://docs.google.com/document/d/1hAxZm_ykljfMzsJfOi71v-272c7UxShJcdaRXzTTVlw/edit?usp=sharing)
 
 ## Process
 
@@ -53,7 +53,7 @@ Cinematd is an app that provides way for everyone to not only log movies for you
 * [Sprint retrospective](https://docs.google.com/document/d/1yoIdMFKYWqrY9xqjlAguXMmMiD25IGY_kxEV45tFgPY/edit?usp=sharing)
 
 ## Tools & APIs
-* Google Maps API
+* Google Maps API(Places Library, Maps JavaScript API)
 * Firebase API
 * TMDB (The Movie Database)
 * Context API
