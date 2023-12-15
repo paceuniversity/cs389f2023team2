@@ -3,11 +3,20 @@ import { FiArrowRight } from "react-icons/fi";
 
 import React, { useState, useEffect } from 'react';
 
+/**
+ * MovieMap component:
+ * This component handles the rendering of the movie map page. It displays a map that shows the movie theaters
+ * in the area of the zipcode by 5km that the user enters. It uses the Google Maps API to display the map and the
+ * movie theaters.
+ */
+
 const MovieMap = () => {
+  // Amer
   const [zipcode, setZipcode] = useState('');
   const [map, setMap] = useState(null);
   const [placesService, setPlacesService] = useState(null);
 
+  // Get the Google Maps API script with key.
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA6kcIVEvtbUj3oRPirLRIQa8WjhAdb0Y8&libraries=places&callback=`;
@@ -20,6 +29,7 @@ const MovieMap = () => {
     };
   }, []);
 
+  // Initialize the map.
   const initializeMap = () => {
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: { lat: 40.730610, lng: -73.935242 },
@@ -32,6 +42,7 @@ const MovieMap = () => {
     setPlacesService(placesService);
   };
 
+  // Handles the searching of movie theaters.
   const searchMovieTheaters = () => {
     if (!zipcode) {
       alert('Please enter a valid zipcode.');
@@ -86,6 +97,7 @@ const MovieMap = () => {
 
   let markers = [];
 
+  // Render the map.
   return (
     <div className="movie-map-container">
       <label>

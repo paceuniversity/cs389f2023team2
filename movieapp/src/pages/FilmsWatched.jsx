@@ -14,6 +14,13 @@ todaysDate = [parseInt(todaysDate[0]), parseInt(todaysDate[1]), parseInt(todaysD
 
 // 'https://api.themoviedb.org/3/movie/movie_id?language=en-US'
 
+/**
+ * FilmsWatched component:
+ * This component displays the films that a user has logged. It displays the films in order of release date, and
+ * displays the rating that the user gave the film. It also displays the poster for the film, and links to the
+ * film's page.
+ */
+
 const options = {
     method: 'GET',
     headers: {
@@ -23,6 +30,7 @@ const options = {
 };
 
 function FilmsWatched () {
+    // Pair programming: Pride & Amer.
     let user = window.location.href.split('/')[4];
 
     const [movies, setMovies] = useState([]);
@@ -30,6 +38,8 @@ function FilmsWatched () {
 
     const promises = [];
 
+    // Get members JSON to get all the films that the user has logged.
+    // This JSON has that data.
     useEffect(() => {
         const getJSON = async () => {
             const ref = collection(getFirestore(app), 'members');
@@ -46,6 +56,11 @@ function FilmsWatched () {
         getJSON();
     }, {});
 
+    // Get films by storing them into Promises that will later be used to fetch data
+    // asynchronously. Then, sort the films by release date, and display them.
+    // Use of Promises is necessary to ensure that the data is fetched before it is
+    // displayed. Use of states and hooks is necessary to ensure that the data is displayed
+    // after it is fetched.
     if (json[user] !== undefined) {
         for (let i = 0; i < json[user].films.length; i++) {
             promises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].films[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));

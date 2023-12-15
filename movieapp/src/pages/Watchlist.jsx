@@ -22,7 +22,14 @@ const options = {
     }
 };
 
+/**
+ * Watchlist component:
+ * This component displays the films that a user has added to their watchlist. It displays the films in order of release date, and
+ * displays the poster for the film, and links to the film's page.
+ */
+
 function Watchlist() {
+    // Pair programming: Pride & Amer.
     let user = window.location.href.split('/')[4];
 
     const [movies, setMovies] = useState([]);
@@ -30,6 +37,7 @@ function Watchlist() {
 
     const promises = [];
 
+    // Get members JSON to get all the films that the user has added to their watchlist.
     useEffect(() => {
         const getJSON = async () => {
             const ref = collection(getFirestore(app), 'members');
@@ -46,6 +54,7 @@ function Watchlist() {
         getJSON();
     }, {});
 
+    // Get all the watchlist movie information.
     if (json[user] !== undefined) {
         for (let i = 0; i < json[user].watchlist.length; i++) {
             promises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].watchlist[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));
@@ -120,6 +129,7 @@ function Watchlist() {
         });
     }
     
+    // Render the watchlist page.
     return (
         <div className="watchlist-page-container">
             <div className="watchlist-box">

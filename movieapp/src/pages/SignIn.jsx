@@ -7,7 +7,14 @@ import TextField from '@mui/material/TextField';
 
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
+/**
+ * SignIn component:
+ * This component handles the sign in page. It handles the sign in functionality.
+ * It also handles the redirecting to the profile page after signing in.
+ */
+
 const SignIn = () => {
+  // Pair programming: Pride & Amer.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [json, setJSON] = useState({});
@@ -41,6 +48,7 @@ const SignIn = () => {
   }));
   */
 
+  // Get authentications JSON.
   useEffect(() => {
     const getJSON = async () => {
         const ref = collection(getFirestore(app), 'authentications');
@@ -63,6 +71,7 @@ const SignIn = () => {
       navigate(path);
   }
 
+  // Sign the user in.
   const signIn = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -79,6 +88,7 @@ const SignIn = () => {
       });
   };
 
+  // Render the sign in page.
   return (
     <div className="sign-in-container">
       <form onSubmit={signIn}>

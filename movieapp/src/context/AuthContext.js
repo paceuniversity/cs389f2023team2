@@ -10,7 +10,12 @@ import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firesto
 
 export const AuthContext = createContext()
 
+/**
+ * AuthContext is a React Context that provides the current authenticated user.
+ */
+
 export const AuthContextProvider = ({children}) => {
+    // Amer
     const [authJson, setAuthJSON] = useState({});
     const [authUser, setAuthUser] = useState(null);
     const [json, setJSON] = useState({});

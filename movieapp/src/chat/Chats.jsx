@@ -5,7 +5,17 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { getFirestore, collection, getDocs, setDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 
+/**
+ * Chats component:
+ * This component handles all the chatting rendering of the app. It displays the sidebar of the chats, and the chat
+ * window itself.  It also handles the updating of the chats.
+ * All of this is done by accessing the authUser variable from the AuthContext and using it to grab data from 
+ * authentications and members stored in Firestore. These collections contain all the data needed to display whatever
+ * needs to be shown.
+ */
+
 const Chats = () => {
+    // Pair programming: Pride & Amer.
     const [chats, setChats] = useState([]);
     const [json, setJSON] = useState({});
     const [authJSON, setAuthJSON] = useState({});
@@ -14,6 +24,7 @@ const Chats = () => {
 
     const { authUser } = useContext(AuthContext);
 
+    // Listener
     if (chats !== undefined && chats.length === 0 && authUser !== null) {
         const getChats = () => {
             const unsub = onSnapshot(doc(db, "userChats", authUser.uid), (doc) => {
@@ -27,6 +38,7 @@ const Chats = () => {
         getChats();
     }
 
+    // Get members JSON
     useEffect(() => {
         const getJSON = async () => {
             // await setDoc(doc(getFirestore(app), "members", "member"), json);
@@ -41,6 +53,7 @@ const Chats = () => {
         getJSON();
     }, {});
 
+    // Get authentications JSON
     useEffect(() => {
         const getAuthJSON = async () => {
             // await setDoc(doc(getFirestore(app), "members", "member"), json);
@@ -55,6 +68,7 @@ const Chats = () => {
         getAuthJSON();
     }, {});
 
+    // Setting all user information
     if (authUser !== null && authJSON !== null && json !== null && !started) {
         if (authJSON[authUser.email] !== undefined) {
             if (json[authJSON[authUser.email].username] !== undefined) {

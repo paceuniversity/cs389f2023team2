@@ -29,7 +29,16 @@ const options = {
   }
 };
 
+/**
+ * HomePage component:
+ * This component handles the home page. It displays the banner, which is a random movie from our Upcoming Movies queries
+ * that is coming out soon. It also displays the upcoming movies that are queried to filter by release date of today and 6 months from now, 
+ * and trending movies, which are the top 5 trending movies on TMDB.
+ * All is done with the TMDB API.
+ */
+
 const Home = () => {
+  // Pair programming: Pride & Amer.
   const queue = new MovieQueue();
 
   const [results, setResults] = useState([])
@@ -54,6 +63,7 @@ const Home = () => {
     fetchTrendingMovies();
   }, [currentPage]);
 
+  // Fetch the data. Update state.
   useEffect(() => {
     fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=' + todaysDate[2] + '-' + todaysDate[0] + '-' + (day.length == 1 ? '0' + day : day) + '&sort_by=popularity.desc', options)
         .then(res => res.json())
@@ -61,6 +71,8 @@ const Home = () => {
         .catch(err => console.log(err))
   }, []);
 
+  // Restructure this data into a literal that we can use later. Put these
+  // literals into a queue.
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
     const releaseDate = result.release_date.split('-');
@@ -84,6 +96,7 @@ const Home = () => {
   }
   // queue.sort();
 
+  // Set the banner to a random movie from the queue.
   useEffect(() => {
     if (banner === '') {
       const random = Math.floor(Math.random() * queue.length);
@@ -108,6 +121,7 @@ const Home = () => {
     }
   });
 
+  // Render all this information.
   return (
     <div className="home-container">
       <div className="banner-background">

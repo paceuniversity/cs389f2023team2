@@ -19,7 +19,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
+/**
+ * IndividualReviewPage component:
+ * This component handles the individual review page. It handles the displaying of the review that the user
+ * clicked on.
+ */
+
 function IndividualReviewPage() {
+    // Pair programming: Pride & Amer.
     const href = window.location.href;
 
     const [json, setJSON] = useState({});
@@ -27,6 +34,7 @@ function IndividualReviewPage() {
     const [updated, setUpdated] = useState(false);
     const [path, setPath] = useState('');
 
+    // Get members JSON. We need to get their reviews which is stored in this JSON.
     useEffect(() => {
         const getJSON = async () => {
             const querySnapshot = await getDocs(collection(getFirestore(app), "members"));
@@ -39,6 +47,7 @@ function IndividualReviewPage() {
         getJSON();
     }, {});
 
+    // Set the review. We also want to set the path to the movie page so that we can link to it.
     if (json !== null && !updated) {
         Object.keys(json).forEach((key) => {
             for (let i = 0; i < json[key].reviews.length; i++) {
@@ -53,8 +62,7 @@ function IndividualReviewPage() {
         });
     }
 
-    console.log(path);
-
+    // Render the review page.
     return (
         <div className="moviereviewcontainer">
                 <div className="reviewsection">

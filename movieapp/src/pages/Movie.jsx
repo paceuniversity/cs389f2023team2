@@ -31,7 +31,15 @@ const options = {
     }
 };
 
+/**
+ * Movie component:
+ * This component handles the movie page. It handles the displaying of the movie that the user
+ * clicked on, including banner, poster, release date, director and description. It also handles the 
+ * adding of the movie to the user's watchlist, the adding of the movie to the user's favorite films, and the logging of the movie.
+ */
+
 function Movie() {
+    // Pair programming: Pride & Amer.
     const href = window.location.href;
 
     let query = '';
@@ -53,6 +61,7 @@ function Movie() {
 
     const queryUrl = 'https://api.themoviedb.org/3/search/movie?query=' + query + '&include_adult=false&language=en-US&page=1&year=' + year;
 
+    // All of these state hooks to be used later and rendered/re-rendered when necessary.
     const queue = new MovieQueue();
     const [results, setResults] = useState([]);
     const [banner, setBanner] = useState('');
@@ -87,7 +96,7 @@ function Movie() {
         p: 4,
     };
 
-
+    // Get poster and set poster.
     useEffect(() => {
         if (queue.length === 0) {
             fetch(queryUrl, options)
@@ -100,6 +109,7 @@ function Movie() {
         }
     }, []);
 
+    // Get authentications JSON.
     useEffect(() => {
         const getAuthJSON = async () => {
             const ref = collection(getFirestore(app), 'authentications');
@@ -116,6 +126,7 @@ function Movie() {
         getAuthJSON();
     }, {});
 
+    // Get if user is logged in.
     useEffect(() => {
         const listen = onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -130,6 +141,7 @@ function Movie() {
         };
     }, []);
 
+    // Get members JSON to be updated later if necessary.
     useEffect(() => {
         const getJSON = async () => {
             const ref = collection(getFirestore(app), 'members');
@@ -146,6 +158,7 @@ function Movie() {
         getJSON();
     }, {});
 
+    // Get movie information and put movie information into a queue.
     for (let i = 0; i < results.length; i++) {
         const result = results[i];
 
@@ -169,14 +182,18 @@ function Movie() {
             break;
         }
     }
+    // Movie ID
     const id = queue.get(0) == null ? 0 : queue.get(0).id;
 
+    // Get and set current user.
     if (authJson !== null && authUser !== null && user === null) {
         if (authJson[authUser.email] !== undefined) {
             setUser(authJson[authUser.email].username);
         }
     }
 
+    // See if user already has the movie in their watchlist, favorite films, or logged films.
+    // If so, update the button to reflect that.
     if (authUser !== null && authJson !== null && json !== null && user !== null && json[user] !== undefined && !updated) {
         const username = user;
 
@@ -229,6 +246,7 @@ function Movie() {
         setUpdated(true);
     }
 
+    // Set banner.
     if (banner === '') {
         fetch('https://api.themoviedb.org/3/movie/' + id + '/images?include_image_language=null', options)
           .then(res => res.json())
@@ -247,6 +265,7 @@ function Movie() {
           .catch(err => console.error('error:' + err));
     }
 
+    // Set director.
     if (director === '') {
         let dir = [];
         let d = '';
@@ -274,6 +293,7 @@ function Movie() {
             .catch(err => console.log(err));
     }
 
+    // Change release year to make it more understandable.
     let releaseYear = '';
     let release = '';
     const date = queue.get(0) == null ? '' : queue.get(0).release.split('-');
@@ -325,6 +345,7 @@ function Movie() {
         navigate(path);
     }
 
+    // Render the movie page.
     return (
         <div className="movie-container">
             <center>
@@ -679,6 +700,7 @@ function Movie() {
                                 {
                                     reviewId: uniqueReviewId,
                                     title: queue.get(0) !== null ? queue.get(0).title : '',
+                                    year: queue.get(0) !== null ? queue.get(0).release.split('-')[0] : '',
                                     poster: poster,
                                     rating: rating,
                                     date: new Date().toLocaleDateString(),

@@ -5,7 +5,17 @@ import { getFirestore } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+/**
+ * Search component:
+ * This component handles the searching for users. It handles the searching for users, as well as the updating of the
+ * messages. It also handles the updating of the avatar for the user when searching for a specific user, as the default
+ * avatar has not been set yet. All of this is done by accessing the authUser variable from the AuthContext and using
+ * it to get the data necessary to update the chat. It also contains a listener that updates the messages when a
+ * user is searched, so that it updates to the correct user.
+ */
+
 const Search = () => {
+    // Pair programming: Pride & Amer.
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [err, setErr] = useState(false)
@@ -16,6 +26,7 @@ const Search = () => {
     const handleSearch = async () => {
         setName("");
         try {
+            // Getting the searched user
             const querySnapshot = await getDocs(collection(getFirestore(app), "users"));
             querySnapshot.forEach((doc) => {
                 // console.log(doc.data().username);
@@ -52,6 +63,7 @@ const Search = () => {
         e.code==="Enter" && handleSearch();
     }
 
+    // Updating userChats so the listener responds
     const handleSelect = async () => {
         try {
             const chat = await getDoc(doc(db, "messages", chatID));

@@ -85,6 +85,15 @@ const options = {
     }
 };
 
+/**
+ * This function filters what TMDB URL to get the data from based on current user's
+ * URL (i.e., if their URL shows they are already in some kind of genre/decade, we will
+ * filter it by that genre/decade. This is the precondition to be able to know what kind
+ * of data we will need to get later).
+ * 
+ * @param {*} i: page number 
+ * @returns URL to fetch data from.
+ */
 function link(i) {
     let includesDecade = false;
     let includesGenre = false;
@@ -125,7 +134,16 @@ function link(i) {
     return 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=' + i;
 }
 
+/**
+ * MoviesPage component:
+ * This component handles the movies page. It handles the displaying of all movies based on
+ * what the user's URL is. It also handles the filtering of movies based on genre, decade,
+ * and popularity.
+ */
+
 function MoviesPage() {
+    // Pair programming: Pride & Amer.
+
     // const [firstResults, setFirstResults] = useState([])
     // const [secondResults, setSecondResults] = useState([])
     // const [thirdResults, setThirdResults] = useState([])
@@ -139,8 +157,9 @@ function MoviesPage() {
     const [movieIndex, setMovieIndex] = useState(0);
     const [queryBox, setQueryBox] = useState(<div></div>);
 
+    // Setting up filters and fetching data.
     useEffect(() => {
-        // Setting genre filters here
+        // Setting genre filters here.
         let hasGenre = false;
         let genre = '';
         const genreFilters = [];
@@ -163,7 +182,7 @@ function MoviesPage() {
         }
         setFilters(genreFilters);
 
-        // Setting popularity order filters here
+        // Setting popularity order filters here.
         let popularityFilters = [];
 
         if (window.location.href.includes('popularity-asc')) {
@@ -175,7 +194,7 @@ function MoviesPage() {
         }
         setPopularityOrder(popularityFilters);
 
-        // Setting release order filters here
+        // Setting release order filters here.
         if (!window.location.href.includes('upcoming')) {
             let hasDecade = false;
             let releaseFilters = [];
@@ -200,10 +219,12 @@ function MoviesPage() {
             setReleaseOrder(releaseFilters);
         }
 
-        // Data access fetches
+        // Data access fetches.
+        // We get data from the first 50 pages here.
         for (let i = 1; i < 51; i++) {
             promises.push(fetch(link(i), options).then(res => res.json()).then(json => json.results));
         }
+        // Get results of all the fetches and set that data.
         const res = [];
         Promise.all(promises).then(results => {
             for (let i = 0; i < results.length; i++) {
@@ -234,6 +255,7 @@ function MoviesPage() {
         });
     }, []);
 
+    // When the user clicks the "Load more" button, we want to load more movies.
     if (movieIndex > 0) {
         for (let i = movieIndex; i < movieIndex + 30; i++) {
             const movie = results[i];
@@ -245,6 +267,9 @@ function MoviesPage() {
         }
     }
 
+    // Query function. This is for the search bar.
+    // We want to query the TMDB API for movies that match the keywords for the
+    // query and constantly update the query box with the results.
     const query = (value) => {
         let query = value;
 
@@ -350,6 +375,7 @@ function MoviesPage() {
     }
     */
 
+    // Render the movies page.
     return (
         <div className="movies-page-container">
             <div className="movies-box">
