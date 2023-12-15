@@ -7,7 +7,16 @@ import { auth, app } from "./FirebaseConfig";
 import firebase from 'firebase/compat/app';
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
+/**
+ * Navbar:
+ * We create a navigation bar here that shows the Home page, Films page, Movie Map page, Members page, Chat page, and Profile page.
+ * Another function here is, we see if the user is logged in or not, and
+ * if they are, we redirect them to their profile page. Otherwise, we redirect
+ * them to the sign in page.
+ */
+
 export default function Navbar() {
+  // Pair programming: Pride & Amer.
   const [authUser, setAuthUser] = useState(null);
   const [json, setJSON] = useState({});
   const [profile, setProfile] = useState("/signin");

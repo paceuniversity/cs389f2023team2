@@ -8,9 +8,18 @@ import { app } from "../FirebaseConfig";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+/**
+ * MembersPage component:
+ * This component handles the members page. It handles the displaying of the users that are registered on the app.
+ */
+
+
 function MembersPage() {
+    // Pride
     const [members, setMembers] = useState([]);
 
+    // Get authentications JSON. We need ALL the registered members' user information so that
+    // we can update and link to their profile pages.
     useEffect(() => {
         const getAuthJSON = async () => {
             // await setDoc(doc(getFirestore(app), "members", "member"), json);
@@ -45,9 +54,8 @@ function MembersPage() {
         }
         getAuthJSON();
     }, {});
-    
-    console.log(members);
 
+    // Render the members page.
     return (
         <div className="member-page-container">
             <div className="member-section">

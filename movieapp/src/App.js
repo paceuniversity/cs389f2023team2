@@ -23,7 +23,13 @@ import { useContext } from 'react';
 import MembersPage from './pages/MembersPage';
 // import MovieCache from './util/MovieCache';
 
+/**
+ * We handle the routing of all pages here, as well as setting
+ * up all page loading.
+ */
+
 function App() {
+  // Pair programming: Pride & Amer.
   const { authUser } = useContext(AuthContext);
 
   /*

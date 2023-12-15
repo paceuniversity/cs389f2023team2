@@ -8,7 +8,15 @@ import { app } from "../FirebaseConfig";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+/**
+ * FollowingPage component:
+ * This component handles the following page. It handles the displaying of the users that the user is following.
+ * It also handles the updating of the avatar for the user when searching for a specific user, as the default
+ * avatar has not been set yet.
+ */
+
 function FollowingPage() {
+    // Pair programming: Pride & Amer.
     let user = window.location.href.split('/')[4];
     const [json, setJSON] = useState({});
     const [friends, setFriends] = useState([]);
@@ -16,6 +24,7 @@ function FollowingPage() {
     const [authJson, setAuthJSON] = useState({});
     const [avatarURL, setAvatarURL] = useState('default-avatar-url');
 
+    // Get members JSON
     useEffect(() => {
         const getJSON = async () => {
             const querySnapshot = await getDocs(collection(getFirestore(app), "members"));
@@ -28,6 +37,7 @@ function FollowingPage() {
         getJSON();
     }, {});
 
+    // Get authentications JSON
     useEffect(() => {
         const getAuthJSON = async () => {
             const ref = collection(getFirestore(app), 'authentications');
@@ -44,6 +54,9 @@ function FollowingPage() {
         getAuthJSON();
     }, {});
 
+    // State changes to update the avatar, username, and friends.
+    // Updates the hook for friends, then it re-renders below at
+    // the return statement.
     if (!updated) {
         if (json !== null) {
             const fr = [];

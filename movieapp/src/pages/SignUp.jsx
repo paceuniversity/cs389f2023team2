@@ -10,8 +10,13 @@ import './signup.css'
 import firebase from 'firebase/compat/app';
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
+/**
+ * SignUp component:
+ * This component handles the sign up page. It handles the sign up functionality.
+ */
 
 const SignUp = () => {
+  // Pair programming: Pride & Amer.
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,6 +52,7 @@ const SignUp = () => {
   }));
   */
 
+  // Get authentications JSON.
   useEffect(() => {
     const getJSON = async () => {
         const ref = collection(getFirestore(app), 'authentications');
@@ -63,6 +69,7 @@ const SignUp = () => {
     getJSON();
   }, {});
 
+  // Get members JSON.
   useEffect(() => {
     const getMembersJSON = async () => {
         const ref = collection(getFirestore(app), 'members');
@@ -88,6 +95,8 @@ const SignUp = () => {
   const signUp = (e) => {
     e.preventDefault();
 
+    // Try to create the user. If the user already exists, throw an error.
+    // Or, if the username is already taken, throw an error.
     try {
       if (json !== undefined) {
         if (json[email] === undefined) {
@@ -168,6 +177,7 @@ const SignUp = () => {
     }
   };
 
+  // Render the sign up page.
   return (
     <div className="sign-up-container">
       <form onSubmit={signUp}>

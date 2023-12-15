@@ -4,7 +4,17 @@ import { db, app } from "../FirebaseConfig";
 import { AuthContext } from "../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+/**
+ * Input component:
+ * This component handles the input for the chat page. It handles the sending of messages, and the updating of the
+ * messages. It also handles the updating of the avatar for the user. All of this is done by accessing the authUser
+ * variable from the AuthContext and using it to get the data necessary to update the chat. It also contains
+ * a listener that updates the messages when the messages collection is updated, which allows things to be
+ * updated in real-time.
+ */
+
 const Input = () => {
+    // Pair programming: Pride & Amer.
     const [chats, setChats] = useState({});
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');

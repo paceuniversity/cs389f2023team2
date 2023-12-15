@@ -6,12 +6,17 @@ import './authdetails.css';
 import firebase from 'firebase/compat/app';
 import { getFirestore, collection, getDocs, setDoc, doc } from "firebase/firestore";
 
+/**
+ * AuthDetails provides the sign out functionality for the app.
+ */
+
 const AuthDetails = () => {
   const [authUser, setAuthUser] = useState(null);
   const [json, setJSON] = useState({});
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    // Amer
     const getJSON = async () => {
         const ref = collection(getFirestore(app), 'authentications');
     

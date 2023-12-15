@@ -40,10 +40,18 @@ const options = {
     }
 };
 
+/**
+ * Profile component:
+ * This component displays the profile of a user. It displays the user's avatar, name, bio,
+ * favorite movies, and watchlist. It also displays the number of films that the user has logged,
+ * the number of reviews that the user has written, and the number of friends that the user has.
+ */
+
 function Profile() {
+    // Pair programming: Pride & Amer.
     let user = window.location.href.split('/')[4];
     let name, bio, avatar, filmsWatched, reviews, friends;
-    let followButton, editButton, signOut;
+    let followButton, editButton, signOutButton;
 
     const [favorites, setFavorites] = useState([]);
     const [watchlist, setWatchlist] = useState([]);
@@ -75,6 +83,7 @@ function Profile() {
 
     let avatarRef;
 
+    // Get profile avatar.
     if (authJson !== null && authJson.usernames !== undefined) {
         for (let i = 0; i < authJson.usernames.length; i++) {
             if (authJson.usernames[i].username === user) {
@@ -90,6 +99,7 @@ function Profile() {
         }
     }
 
+    // Handle avatar change.
     const handleAvatarChange = (e) => {
         console.log('Handling avatar change...');
         const file = e.target.files[0];
@@ -115,6 +125,7 @@ function Profile() {
     const promises = [];
     const watchlistPromises = [];
 
+    // Get members JSON.
     useEffect(() => {
         const getJSON = async () => {
             const ref = collection(getFirestore(app), 'members');
@@ -131,6 +142,7 @@ function Profile() {
         getJSON();
     }, {});
 
+    // Get authentications JSON.
     useEffect(() => {
         const getAuthJSON = async () => {
             const ref = collection(getFirestore(app), 'authentications');
@@ -147,6 +159,7 @@ function Profile() {
         getAuthJSON();
     }, {});
 
+    // See whether the user is logged in and which user is logged in.
     useEffect(() => {
         const listen = onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -161,6 +174,8 @@ function Profile() {
         };
     }, []);
 
+    // If the user is the same as the profile's user, then we will display the buttons
+    // accordingly.
     if (authJson !== null && authUser !== null && authJson[authUser.email] !== undefined) {
         if (authJson[authUser.email].username !== user) {
             editButton = <div></div>;
@@ -317,6 +332,7 @@ function Profile() {
         }
     }
 
+    // Set profile information.
     if (json[user] !== undefined) {
         name = json[user].name;
         bio = json[user].bio;
@@ -334,7 +350,7 @@ function Profile() {
         }
         friends = numFriends;
 
-        // Favorite movies
+        // Favorite movies.
         if (json[user].favoriteFilms.length > 0) {
             if (favorites.length < json[user].favoriteFilms.length) {
                 for (let i = 0; i < json[user].favoriteFilms.length; i++) {
@@ -381,7 +397,7 @@ function Profile() {
             }
         }
 
-        // Watchlist
+        // Watchlist.
         if (watchlist.length === 0 && json[user].watchlist.length > 0) {
             for (let i = 0; i < json[user].watchlist.length; i++) {
                 watchlistPromises.push(fetch('https://api.themoviedb.org/3/movie/' + json[user].watchlist[i].id + '?language=en-US', options).then(res => res.json()).then(json => json));
@@ -434,6 +450,7 @@ function Profile() {
         navigate(path);
     }
 
+    // Render the profile page.
     return (
         <div className='profile-page-container'>
         <div className='profile-banner'>
